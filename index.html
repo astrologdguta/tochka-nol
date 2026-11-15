@@ -258,13 +258,26 @@
 
 <!-- ВЕРХНЕЕ МЕНЮ -->
     <nav id="top-nav" style="position: fixed; top: 0; left: 0; width: 100%; background: rgba(18, 10, 31, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,217,138,0.3); z-index: 5000; display: flex; justify-content: center; align-items: center; padding: 12px 10px; flex-wrap: wrap; gap: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+       
         <a href="#hero" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">Главная</a>
-        <a href="#three-forces" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">Три силы</a>
+       
+        <!-- Путь (Три силы) -->
+        <a href="#three-forces" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--text)'">Горгона</a>
+       
+        <!-- Инструменты -->
         <a href="#stage-1" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">Компас</a>
+       
         <a href="#stage-2" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">Персей</a>
-        <a href="#stage-3" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">Алиса</a>
-        <a href="#legend" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">Легенда</a>
+        <a href="#stage-3" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--blue)'" onmouseout="this.style.color='var(--text)'">Алиса</a>
+       
+        <!-- База знаний -->
+        <a href="#legend-book" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">Легенда</a>
+        <a href="#concepts" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">Понятия</a>
+       
+        <!-- Рефлексия и карта -->
         <a href="#stage-4" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">Дневник</a>
+        <a href="#faq-section" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">Карта</a>
+       
     </nav>
 
     <!-- ГЛАВНЫЙ ЭКРАН -->
@@ -771,7 +784,7 @@
     </section>
 		
         <!-- КЛЮЧЕВЫЕ ПОНЯТИЯ -->
-    <section id="legend" style="padding: 60px 20px; display: flex; flex-direction: column; align-items: center; border-bottom: 1px dashed rgba(255,255,255,0.05);">
+    <section id="concepts" style="padding: 60px 20px; display: flex; flex-direction: column; align-items: center; border-bottom: 1px dashed rgba(255,255,255,0.05);">
         <div style="width: 100%; max-width: 600px; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 14px; border: 1px solid rgba(255, 217, 138, 0.3); box-sizing: border-box;">
            
             <!-- Главная кнопка -->
@@ -1626,7 +1639,7 @@
         ↑
     </button>
 
-	<!-- Защита от копирования и открытия кода -->
+<!-- Защита от копирования и открытия кода -->
     <script>
         document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
         document.addEventListener('selectstart', function(e) {

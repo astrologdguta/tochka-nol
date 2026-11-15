@@ -1625,20 +1625,6 @@
     <button id="scrollTopBtn" onclick="scrollToTop()" style="display: none; position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background: rgba(26, 17, 37, 0.9); border: 1px solid var(--gold); border-radius: 50%; color: var(--gold); font-size: 20px; cursor: pointer; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease; align-items: center; justify-content: center;">
         ↑
     </button>
-
-// Защита от копирования и открытия кода (F12)
-        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
-        document.addEventListener('selectstart', function(e) {
-            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); }
-        });
-        document.addEventListener('dragstart', function(e) { e.preventDefault(); });
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); return false; }
-            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.keyCode === 73)) { e.preventDefault(); return false; }
-            if (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j' || e.keyCode === 74)) { e.preventDefault(); return false; }
-            if (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.keyCode === 85)) { e.preventDefault(); return false; }
-        });
-    </script>
 	
 </body>
 </html>

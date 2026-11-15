@@ -275,9 +275,8 @@
 
         /* --- МОБИЛЬНАЯ АДАПТАЦИЯ --- */
         @media (max-width: 600px) {
-			#stage-3 { overflow-x: hidden; width: 100%; max-width: 100vw; }
-            #stage-3 .scale-container { max-width: 100%; padding: 10px; }
-            #stage-3 h3 { font-size: 1.4rem; text-align: center; }
+			#stage-3 .scale-container { transform: scale(0.7); transform-origin: top center; margin-top: -50px; }
+			#stage-3 .legend { flex-wrap: wrap; justify-content: center; gap: 10px; }
             body { padding-top: 60px; }
             #hero { padding-top: 70px !important; }
             #top-nav { padding: 8px 5px; gap: 10px; }

@@ -275,7 +275,9 @@
 
         /* --- МОБИЛЬНАЯ АДАПТАЦИЯ --- */
         @media (max-width: 600px) {
-			#stage-3 { overflow-x: hidden; }
+			#stage-3 { overflow-x: hidden; width: 100%; max-width: 100vw; }
+            #stage-3 .scale-container { max-width: 100%; padding: 10px; }
+            #stage-3 h3 { font-size: 1.4rem; text-align: center; }
             body { padding-top: 60px; }
             #hero { padding-top: 70px !important; }
             #top-nav { padding: 8px 5px; gap: 10px; }

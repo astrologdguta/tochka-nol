@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Точка Ноль: Путь к Себе</title>
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #120A1F; --bg-sec: #1A1125; --text: #F8F5E9; --muted: #D1C4E9;
+            --blue: #7EC8FF; --gold: #FFD98A; --red: #D14A4A; --purple: #B388FF;
+            --font-title: 'Italiana', serif; --font-body: 'Inter', sans-serif;
+            --r-md: 14px; --r-lg: 20px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-top: 70px;
+        }
+        h1, h2, h3 { font-family: var(--font-title); font-weight: 400; letter-spacing: 1px; }
+
+        .section-title { text-align: center; margin-bottom: 40px; }
+        .section-title h2 { font-size: 2.4rem; color: var(--gold); margin-bottom: 10px; }
+        .section-title p { color: var(--muted); }
+
+        /* Главный экран */
+        #hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; background: radial-gradient(circle at center, rgba(230, 216, 255, 0.1) 0%, rgba(18, 10, 31, 0.5) 100%); }
+        h1 { font-size: 3.2rem; letter-spacing: 4px; margin-bottom: 20px; color: #fff; text-shadow: 0 4px 20px rgba(0,0,0,0.8); }
+        .subtitle { font-size: 1.2rem; color: #fff; margin-bottom: 30px; max-width: 600px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .manifesto-text { font-size: 1rem; color: var(--gold); font-style: italic; max-width: 700px; margin-bottom: 40px; text-shadow: 0 2px 10px rgba(0,0,0,0.9); font-family: Georgia, serif; }
+        .btn-main { display: inline-block; padding: 16px 40px; font-size: 1rem; color: var(--bg); background: var(--text); text-decoration: none; border-radius: var(--r-md); transition: 0.4s; cursor: pointer; border: none; font-weight: 500; font-family: var(--font-body); }
+        .btn-main:hover { background: var(--blue); box-shadow: 0 0 25px rgba(126, 200, 255, 0.6); transform: translateY(-2px); }
+
+        /* Секции */
+        section { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; border-bottom: 1px dashed rgba(255,255,255,0.05); }
+
+        /* Три силы */
+        .forces-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1000px; width: 100%; }
+        .force-card { flex: 1; min-width: 280px; max-width: 320px; background: rgba(0,0,0,0.4); padding: 30px 20px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
+        .force-card h3 { font-size: 1.5rem; margin-bottom: 15px; font-family: var(--font-title); }
+        .force-card p { color: #ddd; font-size: 0.9rem; line-height: 1.5; }
+
+        /* Компас */
+        #balance-wrapper { width: 100%; max-width: 500px; display: flex; flex-direction: column; align-items: center; }
+        .c-title { text-align: center; margin-bottom: 25px; }
+        .help-btn { display: inline-flex; align-items: center; background: rgba(255, 217, 138, 0.1); border: 1px solid var(--gold); color: var(--gold); padding: 10px 20px; border-radius: 30px; font-size: 0.9rem; cursor: pointer; transition: 0.3s; }
+        .help-content { max-height: 0; overflow: hidden; transition: 0.4s; background: rgba(0,0,0,0.4); border-radius: var(--r-md); text-align: left; width: 100%; margin: 0 auto 20px auto; padding: 0 20px; border: 1px solid transparent; }
+        .help-content.open { max-height: 500px; padding: 20px; border-color: rgba(255,255,255,0.1); }
+        .balance-visual-area { position: relative; width: 100%; height: 360px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+        .visual-container { position: relative; width: 220px; height: 220px; background: rgba(0,0,0,0.5); border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); box-shadow: inset 0 0 40px rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; }
+        .axis-center { width: 12px; height: 12px; background: #fff; border-radius: 50%; box-shadow: 0 0 20px #fff; z-index: 10; }
+        .axis-arrow { position: absolute; bottom: 50%; left: 50%; width: 4px; border-radius: 4px; transform-origin: bottom center; transition: all 0.8s ease; opacity: 0.9; }
+        .arrow-x { background: var(--gold); box-shadow: 0 0 15px var(--gold); z-index: 5; height: 80px; }
+        .arrow-y { background: var(--blue); box-shadow: 0 0 15px var(--blue); z-index: 5; height: 80px; }
+        .arrow-z { background: var(--purple); box-shadow: 0 0 15px var(--purple); z-index: 5; height: 80px; }
+        .arrow-average { background: repeating-linear-gradient(to top, #fff, #fff 6px, transparent 6px, transparent 12px); z-index: 6; width: 4px; height: 0; transform: translateX(-50%); transition: all 0.8s ease; border-radius: 2px; }
+        .axis-btn { position: absolute; background: rgba(18, 10, 31, 0.95); padding: 10px 15px; border-radius: var(--r-md); font-weight: bold; cursor: pointer; transition: 0.3s; z-index: 20; white-space: nowrap; }
+        .btn-logic { right: -10px; top: 50%; transform: translateY(-50%); color: var(--gold); border: 1px solid var(--gold); }
+        .btn-emotion { left: -10px; top: 50%; transform: translateY(-50%); color: var(--blue); border: 1px solid var(--blue); }
+        .btn-state { top: -10px; left: 50%; transform: translateX(-50%); color: var(--purple); border: 1px solid var(--purple); }
+        .btn-vector { bottom: -10px; left: 50%; transform: translateX(-50%); color: #fff; border: 1px dashed #fff; }
+        .value-picker { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 320px; max-height: 250px; overflow-y: auto; background: #1A1125; border: 1px solid var(--gold); border-radius: var(--r-md); z-index: 100; display: none; }
+        .value-picker.show { display: block; }
+        .value-option { padding: 12px 15px; color: var(--text); font-size: 0.9rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .value-option:hover { background: rgba(255, 217, 138, 0.15); color: var(--gold); }
+        .value-option.selected { background: rgba(255, 217, 138, 0.2); color: var(--gold); }
+        .picker-title { padding: 15px; text-align: center; color: var(--gold); border-bottom: 1px dashed rgba(255,255,255,0.1); background: #000; position: sticky; top: 0; }
+        .vector-result-wrapper { max-height: 0; overflow: hidden; transition: 0.5s ease-out; width: 100%; }
+        .vector-result-wrapper.open { max-height: 800px; margin-top: 10px; }
+        .vector-result-content { background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.15); border-radius: var(--r-md); padding: 20px; text-align: left; }
+
+        /* Щит Персея */
+        .shield-content { max-width: 700px; width: 100%; text-align: left; background: rgba(0,0,0,0.4); padding: 30px; border-radius: 14px; border: 1px solid rgba(255,217,138,0.3); }
+        .shield-input { width: 100%; padding: 15px; margin: 20px 0; background: rgba(0,0,0,0.5); border: 1px solid var(--blue); border-radius: 10px; color: #fff; font-size: 1.1rem; text-align: center; outline: none; }
+        .shield-btn { width: 100%; padding: 16px; background: var(--gold); color: var(--bg); border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+        .shield-textarea { width: 100%; height: 100px; margin: 20px 0; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; color: #fff; padding: 15px; outline: none; resize: none; }
+        .shield-green-btn { width: 100%; padding: 16px; background: #4CAF50; color: #fff; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1rem; transition: 0.3s; }
+
+        /* Дневник */
+        .calendar-section { max-width: 600px; width: 100%; margin: 0 auto 40px auto; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-lg); padding: 25px 20px; }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 5px; }
+        .calendar-header h3 { font-size: 1.1rem; flex: 1; text-align: center; }
+        .cal-nav-btn { background: rgba(126,200,255,0.1); border: 1px solid rgba(126,200,255,0.4); color: var(--blue); border-radius: 50%; width: 32px; height: 32px; cursor: pointer; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
+        .cal-day-name { font-size: 0.75rem; color: var(--muted); margin-bottom: 10px; }
+        .cal-day { width: 100%; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.9rem; color: rgba(255,255,255,0.2); }
+        .cal-day.has-data { cursor: pointer; font-weight: bold; background: rgba(255, 217, 138, 0.2); color: var(--gold); border: 1px solid var(--gold); }
+        .cal-day.today { outline: 2px solid var(--blue); outline-offset: 2px; }
+        .diary-input { width: 100%; height: 100px; padding: 15px; background: rgba(0,0,0,0.4); border: 1px solid var(--blue); border-radius: var(--r-md); color: #fff; margin-bottom: 15px; resize: none; outline: none; }
+        .btn-save { width: 100%; padding: 15px; background: var(--blue); color: var(--bg); border: none; border-radius: var(--r-md); cursor: pointer; font-weight: 600; margin-bottom: 20px; }
+        .diary-entry { background: rgba(0,0,0,0.4); padding: 15px; border-radius: var(--r-md); border-left: 4px solid var(--gold); margin-bottom: 10px; position: relative; text-align: left; }
+        .diary-entry .time { font-size: 0.8rem; color: var(--muted); margin-bottom: 5px; }
+        .diary-entry .btn-del { position: absolute; top: 15px; right: 15px; background: transparent; border: 1px solid var(--red); color: var(--red); border-radius: 50%; width: 25px; height: 25px; cursor: pointer; }
+
+        /* Стили для Анимации Вектора */
+        .circles-container {
+            position: relative;
+            width: 240px;
+            height: 240px;
+            margin: 0 auto 25px auto;
+        }
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 3px solid;
+            box-sizing: border-box;
+            background: transparent;
+            transition: all 2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
+        }
+        .circle-logic {
+            width: 120px; height: 120px;
+            top: -30px; left: -10px;
+            border-color: #FFD98A;
+            box-shadow: 0 0 15px rgba(255, 217, 138, 0.4);
+        }
+        .circle-emotion {
+            width: 160px; height: 160px;
+            top: -20px; right: -20px;
+            border-color: #7EC8FF;
+            box-shadow: 0 0 15px rgba(126, 200, 255, 0.4);
+        }
+        .circle-state {
+            width: 200px; height: 200px;
+            bottom: -40px; left: 20px;
+            border-color: #B388FF;
+            box-shadow: 0 0 15px rgba(179, 136, 255, 0.4);
+        }
+        .vector-center {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 36px; height: 36px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #fff, 0 0 40px #FFD98A, 0 0 60px #FFD98A;
+            z-index: 10;
+            opacity: 0;
+            transition: all 1s ease-out 2s;
+        }
+        .rays {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 80px; height: 80px;
+            transform: translate(-50%, -50%) scale(0);
+            background: radial-gradient(circle, rgba(255, 217, 138, 0.4) 0%, transparent 60%);
+            border-radius: 50%;
+            z-index: 9;
+            opacity: 0;
+            transition: all 1s ease-out 2s;
+        }
+        .assembled .circle-logic { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .assembled .circle-emotion { top: 50%; right: 50%; transform: translate(50%, -50%); }
+        .assembled .circle-state { bottom: 50%; left: 50%; transform: translate(-50%, 50%); }
+        .assembled .vector-center {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            animation: pulseGlow 2s infinite alternate 3s;
+        }
+        .assembled .rays {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            animation: rotateRays 4s linear infinite 3s;
+        }
+        .sparkle {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 5px; height: 5px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #fff, 0 0 20px #FFD98A;
+            opacity: 0;
+            z-index: 11;
+        }
+        .assembled .sparkle {
+            animation: shoot 2s ease-out 2.5s forwards;
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 20px #fff, 0 0 40px #FFD98A, 0 0 60px #FFD98A; }
+            100% { box-shadow: 0 0 30px #fff, 0 0 60px #FFD98A, 0 0 80px #FFD98A; }
+        }
+        @keyframes rotateRays {
+            0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
+        }
+        @keyframes shoot {
+            0% { transform: translate(-50%, -50%) scale(1.5); opacity: 1; }
+            100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0); opacity: 0; }
+        }
+		
+		/* Стили для Легенды */
+        .legend-btn {
+            width: 100%; padding: 15px; margin-bottom: 10px; background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1); color: var(--text); border-radius: 10px;
+            font-size: 1.1rem; cursor: pointer; text-align: left; font-family: var(--font-body); transition: 0.3s;
+        }
+        .legend-btn:hover { border-color: var(--gold); background: rgba(255,255,255,0.05); }
+        .legend-text {
+            display: none; padding: 20px; margin-bottom: 15px; background: rgba(0,0,0,0.6);
+            border-left: 4px solid var(--gold); border-radius: 0 10px 10px 0;
+            color: #ddd; line-height: 1.6; font-style: italic; font-size: 0.95rem;
+        }
+
+        /* Стили для Атласа состояний */
+        .state-btn {
+            display: block; width: 100%; text-align: left;
+            padding: 12px 15px; margin-bottom: 8px;
+            background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text); border-radius: 8px; cursor: pointer;
+            font-family: var(--font-body); font-size: 0.95rem; transition: 0.3s;
+        }
+        .state-btn:hover { background: rgba(255,255,255,0.1); border-color: var(--gold); }
+        .state-text {
+            display: none; padding: 15px; margin-bottom: 15px;
+            background: rgba(255, 217, 138, 0.05); border-left: 3px solid var(--gold);
+            border-radius: 0 8px 8px 0; font-size: 0.9rem; line-height: 1.5; color: #ddd;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .state-text.state-text-open {
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Искры */
+        .spark-container { position: fixed; pointer-events: none; z-index: 10000; }
+        .spark { position: absolute; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; box-shadow: 0 0 10px var(--gold), 0 0 20px var(--gold); animation: shootSpark 3s forwards ease-out; left: 50%; top: 50%; }
+        @keyframes shootSpark { 0% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0); opacity: 0; } }
+
+        /* --- МОБИЛЬНАЯ АДАПТАЦИЯ --- */
+        @media (max-width: 600px) {
+            body { padding-top: 60px; }
+            #top-nav { padding: 8px 5px; gap: 10px; }
+            #top-nav a { font-size: 0.8rem; }
+            h1 { font-size: 2.2rem; }
+            .subtitle { font-size: 1rem; }
+            .manifesto-text { font-size: 0.9rem; }
+            .forces-grid { flex-direction: column; gap: 15px; }
+            .force-card { min-width: 100%; max-width: 100%; }
+            .visual-container { width: 200px; height: 200px; }
+            .balance-visual-area { height: 320px; }
+            .section-title h2 { font-size: 1.8rem; }
+            .c-title h2 { font-size: 1.8rem; }
+            .btn-main { padding: 14px 30px; font-size: 0.95rem; }
+            .axis-btn { padding: 8px 10px; font-size: 0.8rem; }
+            .calendar-section { padding: 15px 10px; }
+            .cal-day { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ВЕРХНЕЕ МЕНЮ -->
+    <nav id="top-nav" style="position: fixed; top: 0; left: 0; width: 100%; background: rgba(18, 10, 31, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,217,138,0.3); z-index: 5000; display: flex; justify-content: center; align-items: center; padding: 12px 10px; flex-wrap: wrap; gap: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+        <a href="#hero" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">Главная</a>
+        <a href="#three-forces" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">Три силы</a>
+        <a href="#stage-1" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">Компас</a>
+        <a href="#stage-2" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">Персей</a>
+        <a href="#stage-3" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">Алиса</a>
+        <a href="#legend" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">Легенда</a>
+        <a href="#stage-4" style="color: var(--text); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">Дневник</a>
+    </nav>
+
+    <!-- ГЛАВНЫЙ ЭКРАН -->
+    <section id="hero">
+        <div style="display: flex; justify-content: center; width: 100%; margin-bottom: 20px;">
+            <h1 onclick="toggleHeroText()" style="cursor: pointer; transition: 0.3s; display: inline-block; padding: 20px 60px; border-radius: 14px; border: 2px solid rgba(255, 217, 138, 0.7); box-shadow: 0 0 20px rgba(255, 217, 138, 0.2); background: rgba(0,0,0,0.3); letter-spacing: 4px; margin-bottom: 0;" onmouseover="this.style.boxShadow='0 0 30px rgba(255, 217, 138, 0.6)'; this.style.borderColor='var(--gold)';" onmouseout="this.style.boxShadow='0 0 20px rgba(255, 217, 138, 0.2)'; this.style.borderColor='rgba(255, 217, 138, 0.7)';">ТОЧКА НОЛЬ</h1>
+        </div>
+        
+		<!-- Скрытый текст о Точке Ноль -->
+        <div id="hero-text-content" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; width: 100%; max-width: 700px; text-align: left;">
+            <div style="background: rgba(0,0,0,0.4); padding: 25px; border-radius: 14px; border: 1px solid rgba(255, 217, 138, 0.3); margin-bottom: 20px;">
+                <p style="color: var(--gold); font-family: var(--font-title); font-size: 1.3rem; margin-bottom: 15px; text-align: center;">Место, где рождается тишина</p>
+                <p style="color: #ddd; font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">Представь, что ты попал в эпицентр урагана. Вокруг тебя бушуют ветры прошлого: старые обиды, чужие ожидания, гонка за результатами. Но в самом центре этого хаоса всегда есть место, где абсолютно тихо. Это и есть Точка Ноль.</p>
+                <p style="color: #ddd; font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">Это не место на карте и не время на часах. Это состояние твоего сознания. Это момент, когда ты перестаешь бороться с миром и позволяешь себе просто быть.</p>
+                <p style="color: var(--gold); font-weight: bold; margin-bottom: 5px;">Почему там так тихо?</p>
+                <p style="color: #ddd; font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">Потому что в Точке Ноль нет прошлого, которое тянет тебя назад. И нет тревоги о будущем, которое пугает неизвестностью. Там нет оценок, нет «плохо» или «хорошо». Там замолкает внутренний критик, и ты остаешься наедине с самим собой — настоящим. Эта тишина не пустая, она целительная. Она нужна для того, чтобы ты услышал свой собственный голос.</p>
+                <p style="color: var(--gold); font-weight: bold; margin-bottom: 5px;">Почему там рождается новая реальность?</p>
+                <p style="color: #ddd; font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">Потому что невозможно построить что-то новое на обломках старого. Сначала нужно расчистить пространство. Точка Ноль — это чистый лист. Когда Ум, Сердце и Тело замирают и приходят в идеальный баланс, ты перестаешь быть жертвой обстоятельств. Именно из этой абсолютной тишины рождается твое истинное намерение. Здесь ты не просишь у мира подачек — ты сам становишься Творцом.</p>
+                <p style="color: var(--gold); font-style: italic; text-align: center; font-size: 1.1rem; margin-top: 20px;">Задержись здесь на мгновение. Сделай вдох... и выдох. Ты дома.</p>
+            </div>
+        </div>
+
+        <p class="manifesto-text" style="font-size: 1.1rem; color: var(--gold); font-style: italic; margin-top: 10px; margin-bottom: 30px;">
+            «Нельзя вернуться в прошлое и изменить свой старт,<br>но можно стартовать сейчас и изменить свой финиш.»
+        </p>
+
+        <div style="position: relative; width: 250px; height: 250px; margin: 0 auto 30px auto; perspective: 1000px;">
+            <style>
+                .gyro-container {
+                    width: 100%; height: 100%; position: relative;
+                    transform-style: preserve-3d;
+                    animation: rotateGyro 15s linear infinite;
+                }
+                @keyframes rotateGyro {
+                    0% { transform: rotateX(60deg) rotateZ(0deg); }
+                    100% { transform: rotateX(60deg) rotateZ(360deg); }
+                }
+                .gyro-ring {
+                    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+                    border: 2px solid transparent;
+                    border-radius: 50%;
+                    transform-style: preserve-3d;
+                }
+                 .gyro-ring::before {
+                    content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+                    border-radius: 50%;
+                    border: 2px solid var(--gold);
+                    box-shadow: 0 0 15px var(--gold), inset 0 0 15px var(--gold);
+                    opacity: 0.9;
+                }
+                .gyro-ring:nth-child(1) { transform: rotateY(0deg) rotateX(10deg); }
+                .gyro-ring:nth-child(2) { transform: rotateY(60deg) rotateX(10deg); }
+                .gyro-ring:nth-child(3) { transform: rotateY(120deg) rotateX(10deg); }
+                .gyro-ring:nth-child(4) { transform: rotateY(30deg) rotateX(20deg) scale(0.9); opacity: 0.5; border-width: 1px; }
+                .gyro-ring:nth-child(5) { transform: rotateY(90deg) rotateX(20deg) scale(0.9); opacity: 0.5; border-width: 1px; }
+                .gyro-ring:nth-child(6) { transform: rotateY(150deg) rotateX(20deg) scale(0.9); opacity: 0.5; border-width: 1px; }
+                .gyro-core {
+                    position: absolute; top: 50%; left: 50%; width: 15px; height: 15px;
+                    background: #fff; border-radius: 50%; transform: translate(-50%, -50%);
+                    box-shadow: 0 0 20px #fff, 0 0 40px var(--gold), inset 0 0 10px var(--gold);
+                }
+            </style>
+
+            <div class="gyro-container">
+                <div class="gyro-ring"></div>
+                <div class="gyro-ring"></div>
+                <div class="gyro-ring"></div>
+                <div class="gyro-ring"></div>
+                <div class="gyro-ring"></div>
+                <div class="gyro-ring"></div>
+                <div class="gyro-core"></div>
+            </div>
+        </div>
+
+        <p class="subtitle">Это не просто сайт. Это твой личный навигатор.<br>Здесь ты найдешь причину, осознаешь её и увидишь свой новый путь.</p>
+        <p class="manifesto-text">"Человек — не жертва обстоятельств. Он — творец своей реальности. Всё, что происходит с тобой сейчас — это вибрационное эхо твоего прошлого опыта."</p>
+        <a href="#three-forces" class="btn-main">Начать путь</a>
+    </section>
+
+    <!-- ТРИ СИЛЫ -->
+    <section id="three-forces">
+        <div class="section-title">
+            <h2>Три силы внутри нас</h2>
+            <p style="text-align: center;">Мы привыкли смотреть на жизнь линейно.<br>Но внутри нас всё устроено иначе.</p>
+        </div>
+       
+        <div style="width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 20px;">
+           
+            <!-- Горгона -->
+            <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(209, 74, 74, 0.3); border-radius: 14px; overflow: hidden; transition: 0.3s;" onmouseover="this.style.borderColor='var(--red)'" onmouseout="this.style.borderColor='rgba(209, 74, 74, 0.3)'">
+                <button onclick="toggleForce('gorgona')" style="width: 100%; padding: 25px 20px; background: transparent; border: none; cursor: pointer; text-align: center; color: var(--text); display: flex; flex-direction: column; align-items: center; gap: 10px; font-family: var(--font-body);">
+                    <h3 style="color: var(--red); font-family: var(--font-title); font-size: 1.8rem; margin: 0;">Горгона</h3>
+                    <p style="color: var(--gold); font-style: italic; margin: 0; font-size: 1rem;">Твой прошлый опыт. Твой золотой запас.</p>
+                    <span id="icon-gorgona" style="color: var(--red); font-size: 1.2rem; margin-top: 5px;">🔽</span>
+                </button>
+                <div id="text-gorgona" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out;">
+                    <div style="padding: 0 25px 25px 25px; color: #ddd; font-size: 0.95rem; line-height: 1.6; text-align: left;">
+                        «В древнем мифе взгляд Горгоны превращал всё живое в камень. В нашей системе Горгона — это метафора твоего прошлого. Это твои страхи, старые обиды, травмы и навязанные роли. Когда мы постоянно прокручиваем их в голове, мы «застываем» и теряем энергию. Но у Горгоны есть секрет: если не смотреть на неё напрямую, а взглянуть через Зеркало (осознанность), она теряет свою власть. Мы не боремся с ней, мы берем её «золотой запас» — твой жизненный опыт».
+                    </div>
+                </div>
+            </div>
+
+            <!-- Персей -->
+            <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255, 217, 138, 0.3); border-radius: 14px; overflow: hidden; transition: 0.3s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(255, 217, 138, 0.3)'">
+                <button onclick="toggleForce('persey')" style="width: 100%; padding: 25px 20px; background: transparent; border: none; cursor: pointer; text-align: center; color: var(--text); display: flex; flex-direction: column; align-items: center; gap: 10px; font-family: var(--font-body);">
+                    <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.8rem; margin: 0;">Персей</h3>
+                    <p style="color: var(--gold); font-style: italic; margin: 0; font-size: 1rem;">Твой внутренний наблюдатель. Щит-зеркало.</p>
+                    <span id="icon-persey" style="color: var(--gold); font-size: 1.2rem; margin-top: 5px;">🔽</span>
+                </button>
+                <div id="text-persey" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out;">
+                    <div style="padding: 0 25px 25px 25px; color: #ddd; font-size: 0.95rem; line-height: 1.6; text-align: left;">
+                        «Персей в мифе победил чудовище не силой, а хитростью — он использовал Щит-Зеркало, чтобы не встречаться с ним взглядом. Персей — это твое настоящее. Это твоя способность быть Наблюдателем. Он помогает посмотреть на свои страхи и на мир со стороны, без паники. Мир вокруг — это Зеркало, и то, что ты видишь снаружи, — лишь отражение твоих мыслей. Персей учит тебя говорить: "Я сам это создал. У меня есть сила это изменить"».
+                    </div>
+                </div>
+            </div>
+
+            <!-- Алиса -->
+            <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(126, 200, 255, 0.3); border-radius: 14px; overflow: hidden; transition: 0.3s;" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='rgba(126, 200, 255, 0.3)'">
+                <button onclick="toggleForce('alisa')" style="width: 100%; padding: 25px 20px; background: transparent; border: none; cursor: pointer; text-align: center; color: var(--text); display: flex; flex-direction: column; align-items: center; gap: 10px; font-family: var(--font-body);">
+                    <h3 style="color: var(--blue); font-family: var(--font-title); font-size: 1.8rem; margin: 0;">Алиса</h3>
+                    <p style="color: var(--gold); font-style: italic; margin: 0; font-size: 1rem;">Твоя уверенность. Знание пути.</p>
+                    <span id="icon-alisa" style="color: var(--blue); font-size: 1.2rem; margin-top: 5px;">🔽</span>
+                </button>
+                <div id="text-alisa" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out;">
+                    <div style="padding: 0 25px 25px 25px; color: #ddd; font-size: 0.95rem; line-height: 1.6; text-align: left;">
+                        «Вспомни Алису в Стране чудес — она всегда шла вперед, даже когда не знала, что её ждет. Алиса — это твоё будущее и твой внутренний проводник. Это та часть тебя, которая уже знает правильный маршрут. Она не будет тащить тебя силой, она уважает твою свободу воли. Но когда ты пройдешь через страхи прошлого и осознаешь настоящее, именно Алиса возьмет тебя за руку и поведет к твоей новой реальности — в Точку Ноль».
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <a href="#stage-1" class="btn-main" style="margin-top: 40px;">Перейти к Диагностике</a>
+    </section>
+
+    <!-- КОМПАС -->
+    <section id="stage-1">
+        <div id="balance-wrapper">
+            <div class="c-title">
+                <div style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255, 217, 138, 0.7); border-radius: 14px; padding: 20px; cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px rgba(255, 217, 138, 0.1); margin-bottom: 20px; text-align: center;" onclick="toggleHelp()" onmouseover="this.style.boxShadow='0 0 25px rgba(255, 217, 138, 0.3)'; this.style.borderColor='var(--gold)';" onmouseout="this.style.boxShadow='0 0 15px rgba(255, 217, 138, 0.1)'; this.style.borderColor='rgba(255, 217, 138, 0.7)';">
+                    <h2 style="color: var(--gold); margin-bottom: 10px; font-size: 1.6rem;">Твоя точка сборки</h2>
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                        <span style="color: #fff; font-style: italic; font-size: 0.95rem;">Как читать этот Компас?</span>
+                        <span style="color: var(--gold); font-size: 1.1rem;">🔽</span>
+                    </div>
+                </div>
+                <div class="help-content" id="help-content">
+                    <p style="text-align: center; margin-top: 10px; margin-bottom: 15px;">Настрой оси Компаса, чтобы увидеть свой Вектор.</p>
+                    <p style="text-align: center;"><strong>🟡 Логика:</strong> ум. <strong>🔵 Эмоции:</strong> сердце. <strong>🟣 Состояние:</strong> тело.</p>
+                </div>
+            </div>
+            <div class="balance-visual-area">
+                <div class="axis-btn btn-state" onclick="openPicker('state')">Состояние: <span id="ci-z">0</span></div>
+                <div class="axis-btn btn-logic" onclick="openPicker('logic')">Логика: <span id="ci-x">0</span></div>
+                <div class="axis-btn btn-emotion" onclick="openPicker('emotion')">Эмоции: <span id="ci-y">0</span></div>
+                <div class="axis-btn btn-vector" onclick="toggleVectorResult()"><span id="ci-avg">Вектор: 0</span> 🔽</div>
+                <div class="visual-container">
+                    <div class="axis-arrow arrow-x" id="vis-x"></div>
+                    <div class="axis-arrow arrow-y" id="vis-y"></div>
+                    <div class="axis-arrow arrow-z" id="vis-z"></div>
+                    <div class="axis-arrow arrow-average" id="vis-avg"></div>
+                    <div class="axis-center"></div>
+                </div>
+                <div class="value-picker" id="value-picker">
+                    <div class="picker-title" id="picker-title">Выбери значение</div>
+                    <div id="picker-options"></div>
+                </div>
+            </div>
+            <div class="vector-result-wrapper" id="vector-result-wrapper">
+                <div class="vector-result-content" id="vector-result-content">
+                    <h3 id="balance-title">Заголовок</h3>
+                    <p id="balance-text">Текст</p>
+                    <button onclick="saveCompassToDiary()" style="margin-top: 15px; width: 100%; padding: 12px; background: rgba(126, 200, 255, 0.1); border: 1px solid var(--blue); color: var(--blue); border-radius: 10px; cursor: pointer; font-weight: bold;">💾 Сохранить показатели в Дневник</button>
+                </div>
+            </div>
+			
+			<!-- БЛОК ШКАЛЫ -->
+            <div style="width: 100%; margin-top: 50px; margin-bottom: 20px; background: rgba(0,0,0,0.4); padding: 30px 20px; border-radius: 14px; border: 1px solid rgba(255, 217, 138, 0.7); box-shadow: 0 0 15px rgba(255, 217, 138, 0.1);
+                <h3 style="color: var(--gold); margin-bottom: 20px; font-family: var(--font-title); font-size: 1.8rem; text-align: center;">Вибрационная навигация состояния</h3>
+                <div class="scale-container" style="display: flex; width: 100%; height: 500px; position: relative; margin-top: 10px; margin-bottom: 30px; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; box-sizing: border-box;">
+                    <div class="labels-column" style="width: 35%; display: flex; flex-direction: column; justify-content: space-between; text-align: right; padding-right: 10px; font-size: 0.9rem; color: rgba(255,255,255,0.7); z-index: 10; box-sizing: border-box;">
+                        <div onclick="showStateFromScale('grace')" style="cursor: pointer; color: #FFD98A; font-weight: bold;" title="Нажми, чтобы прочитать">Благость</div>
+                        <div onclick="showStateFromScale('peace')" style="cursor: pointer; color: #FFD98A; font-weight: bold;" title="Нажми, чтобы прочитать">Покой</div>
+                        <div onclick="showStateFromScale('joy')" style="cursor: pointer; color: #99ccff;" title="Нажми, чтобы прочитать">Радость</div>
+                        <div onclick="showStateFromScale('acceptance')" style="cursor: pointer; color: #99ccff;" title="Нажми, чтобы прочитать">Принятие</div>
+                        <div onclick="showStateFromScale('doubt')" style="cursor: pointer; color: #99ccff;" title="Нажми, чтобы прочитать">Сомнение</div>
+                        <div onclick="showStateFromScale('anger')" style="cursor: pointer; color: #ff9999;" title="Нажми, чтобы прочитать">Гнев</div>
+                        <div onclick="showStateFromScale('fear')" style="cursor: pointer; color: #ff9999;" title="Нажми, чтобы прочитать">Страх</div>
+                        <div onclick="showStateFromScale('resentment')" style="cursor: pointer; color: #ff9999;" title="Нажми, чтобы прочитать">Обида</div>
+                        <div onclick="showStateFromScale('apathy')" style="cursor: pointer; color: #ff9999;" title="Нажми, чтобы прочитать">Апатия</div>
+                        <div onclick="showStateFromScale('depression')" style="cursor: pointer; color: #ff9999;" title="Нажми, чтобы прочитать">Депрессия</div>
+                    </div>
+                    <div class="gradient-column" style="width: 30%; height: 100%; background: linear-gradient(to bottom, #ffffff 0%, #ffd700 12%, #ff8c00 25%, #00b34a 40%, #0077ff 55%, #4b0082 75%, #1a1125 90%, #000000 100%); border-radius: 8px; position: relative; box-sizing: border-box; border: 2px solid rgba(255, 255, 255, 0.4); box-shadow: 0 0 15px rgba(255, 255, 255, 0.2), inset 0 0 10px rgba(0,0,0,0.5);">
+                        <div style="position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background: rgba(255,255,255,0.5);"></div>   
+                    </div>
+                    <div class="arrows-column" style="width: 35%; height: 100%; position: relative; padding-left: 10px; box-sizing: border-box;">
+                        <div class="h-arrow" style="position: absolute; left: 0; width: 100%; height: 6px; border-radius: 3px; bottom: 80%; background: var(--gold); box-shadow: 0 0 10px var(--gold);">
+                            <span style="position: absolute; left: 0; top: -16px; font-size: 0.65rem; color: var(--gold); font-weight: bold; white-space: nowrap;">Логика</span>
+                        </div>
+                        <div class="h-arrow" style="position: absolute; left: 0; width: 100%; height: 6px; border-radius: 3px; bottom: 20%; background: var(--blue); box-shadow: 0 0 10px var(--blue);">
+                            <span style="position: absolute; left: 0; top: -16px; font-size: 0.65rem; color: var(--blue); font-weight: bold; white-space: nowrap;">Эмоции</span>
+                        </div>
+                        <div class="h-arrow" style="position: absolute; left: 0; width: 100%; height: 6px; border-radius: 3px; bottom: 50%; background: var(--purple); box-shadow: 0 0 10px var(--purple);">
+                            <span style="position: absolute; left: 0; top: -16px; font-size: 0.65rem; color: var(--purple); font-weight: bold; white-space: nowrap;">Тело</span>
+                        </div>
+                        <div class="h-arrow" style="position: absolute; left: 0; width: 100%; height: 8px; border-radius: 3px; bottom: 50%; background: #ffffff; border: 1px solid #000; box-shadow: 0 0 10px rgba(255,255,255,0.8); z-index: 20;">
+                            <span style="position: absolute; left: 0; top: -16px; font-size: 0.65rem; color: #fff; font-weight: bold; white-space: nowrap; text-shadow: 1px 1px 2px #000;">Вектор</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Окошко для описания -->
+                <div id="scale-info-box" style="display: none; margin-top: 15px; padding: 15px; background: rgba(0,0,0,0.6); border: 1px solid var(--gold); border-radius: 10px; text-align: left; font-size: 0.95rem; color: #ddd; line-height: 1.5;"></div>
+            </div>
+            <!-- КОНЕЦ БЛОКА ШКАЛЫ -->
+								
+			<!-- Справочник состояний -->
+            <div style="width: 100%; margin-top: 40px; margin-bottom: 20px;">
+                <button onclick="toggleAtlas()" style="width: 100%; padding: 20px; background: rgba(0,0,0,0.6); border: 1px solid var(--gold); color: var(--gold); border-radius: 14px; font-size: 1.2rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-title); transition: 0.3s;">
+                    <span>📖 Справочник состояний</span>
+                    <span id="atlas-icon" style="font-family: sans-serif;">🔽</span>
+                </button>
+                <div id="atlas-content" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; text-align: left; margin-top: 10px;">
+                    <button onclick="toggleLevel('low')" style="width: 100%; padding: 15px; background: rgba(209, 74, 74, 0.1); border: 1px solid var(--red); color: var(--red); border-radius: 10px; font-size: 1.1rem; cursor: pointer; margin-bottom: 10px; display: flex; justify-content: space-between;">
+                        <span>📉 Низкие вибрации (Тяжесть)</span>
+                        <span id="icon-low">🔽</span>
+                    </button>
+                    <div id="level-low" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; padding-left: 20px; margin-bottom: 15px;">
+                        <button class="state-btn" onclick="openStateText('depression')">Депрессия (Пустота)</button>
+                        <div id="text-depression" class="state-text"><strong>Локация:</strong> Крайняя точка низких вибраций.<br><strong>Механика:</strong> Полная остановка энергетических потоков. Застывание. Отсутствие контакта с внешним миром и внутренними импульсами.<br><strong>Индикатор:</strong> Тяжесть в теле, отсутствие желаний, эмоциональная глухота.<br><strong>Маршрут выхода:</strong> Микродвижения. Восстановление базового контакта с телом (дыхание, вода, тактильные ощущения).</div>
+                        <button class="state-btn" onclick="openStateText('apathy')">Апатия (Безразличие)</button>
+                        <div id="text-apathy" class="state-text"><strong>Локация:</strong> Нижняя зона.<br><strong>Механика:</strong> Энергия есть, но она заблокирована. Отсутствие вектора движения. Обесценивание целей.<br><strong>Индикатор:</strong> Вялость, скука, ощущение бессмысленности действий.<br><strong>Маршрут выхода:</strong> Поиск любого минимального интереса. Искусственное создание импульса через действие.</div>
+                        <button class="state-btn" onclick="openStateText('guilt')">Вина (Самоуничтожение)</button>
+                        <div id="text-guilt" class="state-text"><strong>Локация:</strong> Зона низких вибраций.<br><strong>Механика:</strong> Агрессия, направленная внутрь. Разрушение собственных границ из-за несоответствия стандартам.<br><strong>Индикатор:</strong> Сжатие в груди, желание сжаться, мышечные зажимы.<br><strong>Маршрут выхода:</strong> Разделение факта и оценки. Признание права на ошибку как элемента опыта.</div>
+                        <button class="state-btn" onclick="openStateText('resentment')">Обида (Застывшая боль)</button>
+                        <div id="text-resentment" class="state-text"><strong>Локация:</strong> Зона низких вибраций.<br><strong>Механика:</strong> Застывшая энергия, направленная в прошлое. Удержание ожидания изменения внешнего объекта.<br><strong>Индикатор:</strong> Ощущение несправедливости, внутренний диалог с прошлым.<br><strong>Маршрут выхода:</strong> Перенаправление энергии из прошлого в настоящее. Принятие факта. Возврат фокуса на собственные реакции.</div>
+                        <button class="state-btn" onclick="openStateText('fear')">Страх (Паралич)</button>
+                        <div id="text-fear" class="state-text"><strong>Локация:</strong> Зона низких вибраций (переходная).<br><strong>Механика:</strong> Проекция негативного сценария в будущее. Блокировка действия через создание иллюзии угрозы.<br><strong>Индикатор:</strong> Учащенное сердцебиение, холод в конечностях, ступор.<br><strong>Маршрут выхода:</strong> Возврат в настоящий момент (заземление). Деконструкция страха на составляющие. Действие вопреки.</div>
+                        <button class="state-btn" onclick="openStateText('anger')">Гнев (Разрушение)</button>
+                        <div id="text-anger" class="state-text"><strong>Локация:</strong> Зона низких вибраций (активная).<br><strong>Механика:</strong> Выброс накопленной энергии вовне. Реакция на нарушение границ.<br><strong>Индикатор:</strong> Жар в теле, напряжение мышц, учащенное дыхание.<br><strong>Маршрут выхода:</strong> Физическая разрядка. Осознание истинной причины нарушения границ.</div>
+                        <button class="state-btn" onclick="openStateText('anxiety')">Тревога (Хаос)</button>
+                        <div id="text-anxiety" class="state-text"><strong>Локация:</strong> Зона низких/средних вибраций.<br><strong>Механика:</strong> Рассогласование ума и тела. Беспредметное беспокойство.<br><strong>Индикатор:</strong> Суетливость, невозможность усидеть на месте, поверхностное дыхание.<br><strong>Маршрут выхода:</strong> Структурирование. Наведение порядка в делах и мыслях. Фиксация на простых действиях.</div>
+                    </div>
+                    <button onclick="toggleLevel('mid')" style="width: 100%; padding: 15px; background: rgba(255, 217, 138, 0.1); border: 1px solid var(--gold); color: var(--gold); border-radius: 10px; font-size: 1.1rem; cursor: pointer; margin-bottom: 10px; display: flex; justify-content: space-between;">
+                        <span>📊 Средние вибрации (Поиск)</span>
+                        <span id="icon-mid">🔽</span>
+                    </button>
+                    <div id="level-mid" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; padding-left: 20px; margin-bottom: 15px;">
+                        <button class="state-btn" onclick="openStateText('doubt')">Сомнение (Замирание)</button>
+                        <div id="text-doubt" class="state-text"><strong>Локация:</strong> Центр. Зона перехода.<br><strong>Механика:</strong> Остановка перед выбором. Страх ошибки блокирует движение вперед.<br><strong>Индикатор:</strong> Внутренний диалог, пауза в действиях.<br><strong>Маршрут выхода:</strong> Признание права на любой исход. Совершение выбора как факта (без ожидания идеального варианта).</div>
+                        <button class="state-btn" onclick="openStateText('boredom')">Скука (Застой)</button>
+                        <div id="text-boredom" class="state-text"><strong>Локация:</strong> Средние вибрации.<br><strong>Механика:</strong> Отсутствие новизны. Энергия циркулирует по привычному кругу.<br><strong>Индикатор:</strong> Поиск внешних раздражителей, ощущение "дня сурка".<br><strong>Маршрут выхода:</strong> Внесение изменений в привычные рутины. Изучение новой информации.</div>
+                        <button class="state-btn" onclick="openStateText('acceptance')">Принятие (Смирение)</button>
+                        <div id="text-acceptance" class="state-text"><strong>Локация:</strong> Переход к высоким вибрациям.<br><strong>Механика:</strong> Остановка борьбы с реальностью. Констатация факта без эмоциональной оценки.<br><strong>Индикатор:</strong> Расслабление, снижение сопротивления.<br><strong>Маршрут выхода:</strong> Углубление состояния. Переход к благодарности.</div>
+                        <button class="state-btn" onclick="openStateText('gratitude')">Благодарность (Тепло)</button>
+                        <div id="text-gratitude" class="state-text"><strong>Локация:</strong> Высокие вибрации (начало).<br><strong>Механика:</strong> Смена фокуса внимания с недостающего на имеющееся.<br><strong>Индикатор:</strong> Расширение в груди, тепло, улыбка.<br><strong>Маршрут выхода:</strong> Удержание состояния. Трансляция тепла вовне.</div>
+                    </div>
+                    <button onclick="toggleLevel('high')" style="width: 100%; padding: 15px; background: rgba(126, 200, 255, 0.1); border: 1px solid var(--blue); color: var(--blue); border-radius: 10px; font-size: 1.1rem; cursor: pointer; margin-bottom: 10px; display: flex; justify-content: space-between;">
+                        <span>✨ Высокие вибрации (Свет)</span>
+                        <span id="icon-high">🔽</span>
+                    </button>
+                    <div id="level-high" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; padding-left: 20px; margin-bottom: 15px;">
+                        <button class="state-btn" onclick="openStateText('courage')">Смелость (Действие)</button>
+                        <div id="text-courage" class="state-text"><strong>Локация:</strong> Высокие вибрации.<br><strong>Механика:</strong> Осознанное действие при наличии страха. Выход из зоны комфорта.<br><strong>Индикатор:</strong> Прилив адреналина, ясность ума.<br><strong>Маршрут выхода:</strong> Закрепление опыта. Расширение зоны действия.</div>
+                        <button class="state-btn" onclick="openStateText('joy')">Радость (Легкость)</button>
+                        <div id="text-joy" class="state-text"><strong>Локация:</strong> Высокие вибрации.<br><strong>Механика:</strong> Свободное течение энергии. Совпадение внутренних желаний и внешних обстоятельств.<br><strong>Индикатор:</strong> Легкость, смех, ощущение полета.<br><strong>Маршрут выхода:</strong> Состояние потока. Удержание частоты.</div>
+                        <button class="state-btn" onclick="openStateText('peace')">Покой (Точка Ноль)</button>
+                        <div id="text-peace" class="state-text"><strong>Локация:</strong> Пик. Абсолютный баланс.<br><strong>Механика:</strong> Идеальное равновесие Ума, Сердца и Тела. Тишина ума.<br><strong>Индикатор:</strong> Глубокая тишина, ощущение "Я есть".<br><strong>Маршрут выхода:</strong> Пребывание в точке. Наблюдение.</div>
+                        <button class="state-btn" onclick="openStateText('grace')">Благость (Высшее)</button>
+                        <div id="text-grace" class="state-text"><strong>Локация:</strong> За пределами шкалы.<br><strong>Механика:</strong> Единство со всем сущим. Растворение границ личности.<br><strong>Индикатор:</strong> Абсолютный свет, безусловная любовь.<br><strong>Маршрут выхода:</strong> Не требуется. Это состояние завершенности.</div>
+                    </div>
+                </div>
+            </div>
+			
+            <a href="#stage-2" class="btn-main" style="margin-top: 30px;">Перейти к Осознанию (Щит Персея)</a>
+        </div>
+    </section>
+
+    <!-- ЩИТ ПЕРСЕЯ -->
+    <section id="stage-2">
+        <div class="section-title">
+            <h2>Щит Персея</h2>
+            <p>Осознание (Зеркало мира)</p>
+        </div>
+        <div class="shield-content">
+            <!-- ЭКРАН 1 -->
+            <div id="shield-step-0">
+                <p style="color: var(--gold); font-style: italic; margin-bottom: 15px;">Ты дошёл до места, где начинается настоящая работа.</p>
+                <p>Всё, что ты сейчас чувствуешь — не случайность. Это эхо твоего прошлого выбора. Если ты сам создал эту ситуацию — значит, ты можешь её и изменить.</p>
+                <p>Введи одно слово — то, что сейчас больше всего мешает тебе жить.</p>
+                <input type="text" id="shield-word-input" class="shield-input" placeholder="Впиши одно слово...">
+                <button onclick="startShieldWork()" class="shield-btn">Начать путь</button>
+            </div>
+
+            <!-- ЭКРАН 2 (ШАГ 1) -->
+            <div id="shield-step-1" style="display: none;">
+                <h3 style="color: var(--gold); margin-bottom: 15px;">Шаг 1. Как ты сам создал эту ситуацию</h3>
+                <p style="color: var(--blue); font-style: italic; margin-bottom: 15px;">«Я сам пришёл в её пещеру. <span class="shield-word-text"></span> — это не то, что случилось. Это то, что ты решил. Ты можешь это изменить».</p>
+                <p>1. Когда это появилось в твоей жизни впервые?</p>
+                <p>2. Какие мысли ты чаще всего думаешь?</p>
+                <p>3. Что ты выбираешь до сих пор, что подкрепляет это?</p>
+                <textarea placeholder="Твои мысли..." class="shield-textarea"></textarea>
+                <button onclick="nextShieldStep(2)" class="shield-btn" style="background: var(--blue); color: var(--bg);">Сохранить и идти дальше</button>
+            </div>
+
+            <!-- ЭКРАН 3 (ШАГ 2) -->
+            <div id="shield-step-2" style="display: none;">
+                <h3 style="color: var(--gold); margin-bottom: 15px;">Шаг 2. Вторичная выгода</h3>
+                <p style="color: var(--blue); font-style: italic; margin-bottom: 15px;">«Оно — твой защитник. Просто он защищает тебя неправильно».</p>
+                <p>1. Что это позволяет тебе не делать?</p>
+                <p>2. Что это позволяет тебе получать от других?</p>
+                <p>3. Чего ты боишься больше: остаться с этим или остаться без него?</p>
+                <textarea placeholder="Твои мысли..." class="shield-textarea"></textarea>
+                <button onclick="nextShieldStep(3)" class="shield-btn" style="background: var(--blue); color: var(--bg);">Сохранить и идти дальше</button>
+            </div>
+
+            <!-- ЭКРАН 4 (ШАГ 3) -->
+            <div id="shield-step-3" style="display: none;">
+                <h3 style="color: var(--gold); margin-bottom: 15px;">Шаг 3. Зеркало мира</h3>
+                <p style="color: var(--blue); font-style: italic; margin-bottom: 15px;">«Мир — это зеркало. Всё, что ты видишь вокруг — отражение того, что ты носишь внутри».</p>
+                <p>1. Кто в твоей жизни олицетворяет это состояние?</p>
+                <p>2. Как люди отражают тебе это?</p>
+                <p>3. Что мир пытается тебе показать через это?</p>
+                <textarea placeholder="Твои мысли..." class="shield-textarea"></textarea>
+                <button onclick="nextShieldStep(4)" class="shield-btn" style="background: var(--blue); color: var(--bg);">Перейти к финалу</button>
+            </div>
+
+            <!-- ЭКРАН 5 (РИТУАЛ) -->
+            <div id="shield-step-4" style="display: none; text-align: center;">
+                <h3 style="color: var(--gold); margin-bottom: 15px;">Финальный ритуал. Прощание</h3>
+                <p>Ты прошёл путь. Теперь ты знаешь: это не враг, а часть твоего прошлого.</p>
+                <p>Напиши здесь всё, что хочешь отпустить.</p>
+                <textarea id="final-release-text" placeholder="Напиши всё, что хочешь оставить в прошлом..." class="shield-textarea" style="border-color: var(--gold); display: block; width: 100%; height: 100px; margin: 20px 0; background: rgba(0,0,0,0.5); border-radius: 10px; color: #fff; padding: 15px; outline: none; resize: none;"></textarea>
+                <button onclick="releaseShieldWord()" class="shield-green-btn">✅ Завершить и сохранить в Дневник</button>
+                <div id="shield-final-message" style="display: none; margin-top: 20px;">
+                    <p style="color: var(--gold); font-size: 1.2rem; margin-bottom: 20px;">Смотри. Оно разлетается. Ты больше не это.</p>
+                    <button onclick="document.getElementById('stage-3').scrollIntoView({behavior: 'smooth'})" class="shield-btn" style="background: var(--blue); color: var(--bg);">Пойти в Новый Вектор</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- НОВЫЙ ВЕКТОР -->
+    <section id="stage-3">
+        <div class="section-title">
+            <h2>Твой Новый Вектор</h2>
+            <p>Здесь ты получишь четкий план от своего внутреннего штурмана.</p>
+        </div>
+
+        <div style="max-width: 700px; width: 100%;">
+            <button onclick="toggleNewVector()" style="width: 100%; padding: 20px; background: rgba(0,0,0,0.6); border: 1px solid var(--gold); color: var(--gold); border-radius: 14px; font-size: 1.2rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-title); transition: 0.3s;">
+                <span>Практика Творца</span>
+                <span id="new-vector-icon" style="font-family: sans-serif;">🔽</span>
+            </button>
+
+            <div id="new-vector-content" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; margin-top: 10px; background: rgba(0,0,0,0.4); border-radius: 14px; border: 1px solid transparent;">
+                <div style="padding: 30px; text-align: left;">
+                
+                    <!-- Анимация Вектора -->
+            <div style="width: 100%; margin: 20px 0 40px 0; padding: 30px; background: rgba(0,0,0,0.3); border-radius: 14px; border: 1px solid rgba(255,255,255,0.05); text-align: center;">
+                <h4 style="color: var(--gold); margin-bottom: 25px; font-family: var(--font-title); font-size: 1.3rem;">Смотри, как собирается твой Вектор</h4>
+               
+                <div class="circles-container" id="circles-container">
+                    <div class="circle circle-logic"></div>
+                    <div class="circle circle-emotion"></div>
+                    <div class="circle circle-state"></div>
+                   
+                    <div class="rays"></div>
+                    <div class="vector-center"></div>
+                   
+                    <div class="sparkle" style="--x: -50px; --y: -50px;"></div>
+                    <div class="sparkle" style="--x: 50px; --y: -50px;"></div>
+                    <div class="sparkle" style="--x: -50px; --y: 50px;"></div>
+                    <div class="sparkle" style="--x: 50px; --y: 50px;"></div>
+                    <div class="sparkle" style="--x: 0px; --y: -60px;"></div>
+                    <div class="sparkle" style="--x: 0px; --y: 60px;"></div>
+                    <div class="sparkle" style="--x: -60px; --y: 0px;"></div>
+                    <div class="sparkle" style="--x: 60px; --y: 0px;"></div>
+                    <div class="sparkle" style="--x: -35px; --y: -60px;"></div>
+                    <div class="sparkle" style="--x: 35px; --y: -60px;"></div>
+                    <div class="sparkle" style="--x: -35px; --y: 60px;"></div>
+                    <div class="sparkle" style="--x: 35px; --y: 60px;"></div>
+                </div>
+               
+                <div class="legend">
+                    <span class="color-logic">🟡 Логика</span>
+                    <span class="color-emotion">🔵 Эмоции</span>
+                    <span class="color-state">🟣 Тело</span>
+                    <span class="color-vector">⚪ Вектор</span>
+                </div>
+            </div>
+            <!-- Конец анимации -->
+			
+					<p style="margin-bottom: 15px;">Теперь, когда ты знаешь, каково это — быть в балансе, сделай первый шаг в своем новом состоянии.</p>
+                    <p style="margin-bottom: 20px; font-style: italic; color: #fff;">Напиши в Дневник: какое одно действие ты сделаешь сегодня, чтобы закрепить это состояние?</p>
+
+                    <!-- Окошко для показа описания прямо на шкале -->
+                    <div id="scale-info-box" style="display: none; margin-top: 15px; padding: 15px; background: rgba(0,0,0,0.6); border: 1px solid var(--gold); border-radius: 10px; text-align: left; font-size: 0.95rem; color: #ddd; line-height: 1.5;"></div>
+
+                    <textarea id="new-vector-text" placeholder="Твое действие..." style="width: 100%; height: 80px; padding: 15px; background: rgba(0,0,0,0.5); border: 1px solid var(--blue); border-radius: 10px; color: #fff; margin-bottom: 15px; resize: none; outline: none;"></textarea>
+                    <button onclick="saveNewVectorAction()" style="width: 100%; padding: 15px; background: var(--blue); color: var(--bg); border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-bottom: 20px; transition: 0.3s;" onmouseover="this.style.boxShadow='0 0 20px rgba(126,200,255,0.5)'" onmouseout="this.style.boxShadow='none'">💾 Сохранить в Дневник</button>
+
+                    <a href="#stage-4" class="btn-main" style="display: block; text-align: center;">Завершить путешествие</a>
+                </div>
+            </div>
+        </div>
+    </section>
+        
+		<!-- ЛЕГЕНДА -->
+    <section id="legend-book" style="padding: 60px 20px; display: flex; flex-direction: column; align-items: center; border-bottom: 1px dashed rgba(255,255,255,0.05);">
+        <div style="width: 100%; max-width: 600px; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 14px; border: 1px solid rgba(255, 217, 138, 0.3); box-sizing: border-box;">
+           
+            <!-- Главная кнопка (Легенда) -->
+            <button onclick="toggleLegendBook()" style="width: 100%; padding: 20px; background: rgba(0,0,0,0.6); border: 1px solid var(--gold); color: var(--gold); border-radius: 14px; font-size: 1.5rem; cursor: pointer; display: flex; justify-content: center; align-items: center; font-family: var(--font-title); transition: 0.3s; position: relative;">
+                <span>📖 Легенда</span>
+                <span id="icon-legend" style="font-family: sans-serif; position: absolute; right: 20px;">🔽</span>
+            </button>
+
+            <!-- Контейнер для книги (скрыт по умолчанию) -->
+            <div id="book-wrapper" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; margin-top: 15px;">
+                <div style="background: rgba(255,255,255,0.02); padding: 30px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); min-height: 250px; display: flex; flex-direction: column; justify-content: space-between;">
+                   
+                    <!-- Страница 1 -->
+                    <div id="page-1" class="page active" style="display: block; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Вихрь бытия</h3>
+                        <p>В самом начале не было ни времени, ни форм. Был только бесконечный поток энергии. Но когда из этого потока родилось сознание, появилась двойственность. Мир разделился на свет и тьму, на плюс и минус, на радость и боль. Так вокруг каждого человека начал закручиваться свой собственный вихрь.</p>
+                    </div>
+
+                    <!-- Страница 2 -->
+                    <div id="page-2" class="page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Иллюзия движения</h3>
+                        <p>Большинство людей рождаются прямо в эпицентре этого урагана. Их бросает из стороны в сторону: сегодня они на гребне успеха, завтра падают в бездну отчаяния. Этот вихрь создает иллюзию движения, но на самом деле человек просто крутится по кругу, не в силах вырваться из плена обстоятельств.</p>
+                    </div>
+
+                    <!-- Страница 3 -->
+                    <div id="page-3" class="page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Сердце тишины</h3>
+                        <p>Но в самом центре любого урагана всегда есть место, где абсолютно тихо. Древние мудрецы называли это место Точкой Ноль. Это точка абсолютного спокойствия, где замирают все эмоции, утихают мысли и расслабляется тело.</p>
+                    </div>
+
+                    <!-- Страница 4 -->
+                    <div id="page-4" class="page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Обретение опоры</h3>
+                        <p>Найти эту точку — значит обрести опору. Когда человек осознанно входит в неё, вихрь вокруг не перестает существовать, но он больше не может причинить вреда. Человек, стоящий в Точке Ноль, становится наблюдателем. Из этой абсолютной тишины рождается истинное намерение.</p>
+                    </div>
+
+                    <!-- Страница 5 -->
+                    <div id="page-5" class="page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Точка Баланса</h3>
+                        <p>Точка Ноль — это точка Баланса, в которой человек обретает истинную опору. Баланс — это не просто отсутствие движения. Это состояние, когда все внутренние силы — Ум, Сердце и Тело — синхронизируются. Когда ум не спорит с сердцем, а тело не сопротивляется душе.</p>
+                    </div>
+
+                    <!-- Страница 6 -->
+                    <div id="page-6" class="page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Свобода от прошлого</h3>
+                        <p>В этой точке прошлое перестает тянуть назад, а будущее перестает пугать неизвестностью. Находясь в Точке Ноль, человек перестает быть жертвой обстоятельств. Он становится Творцом, который из глубины тишины созидает новую реальность.</p>
+                    </div>
+
+                    <!-- Страница 7 -->
+                    <div id="page-7" class="page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Пирамида и Благодарность</h3>
+                        <p>Стоя в Точке Ноль, человек видит, как устроен вихрь. Вверх от неё уходит светлая спираль, которая поднимает сознание к высшим вибрациям. Вниз уходит тёмная спираль, которая затягивает в депрессию и страх. Какая сила способна вытащить человека из самой глубокой ямы? Это Благодарность.</p>
+                    </div>
+
+                    <!-- Страница 8 -->
+                    <div id="page-8" class="page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Сила благодарности</h3>
+                        <p>Только чистая, искренняя благодарность за всё, что есть, работает как лифт. Она закручивает спираль вверх. Как только человек начинает сомневаться, спираль тут же закручивается вниз.</p>
+                    </div>
+
+                    <!-- Страница 9 -->
+                    <div id="page-9" class="page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Горгона (Прошлое)</h3>
+                        <p>Но как удержаться в Точке Ноль? Для этого внутри нас живут Три силы. Первая из них — Горгона. Это наше прошлое. Она смотрит на нас своими страшными глазами из старых обид и ошибок, пытаясь превратить нас в камень. Но мы не боремся с ней. Мы берём её «золотой запас» — наш опыт, и переплавляем его в твердую почву под ногами.</p>
+                    </div>
+
+                    <!-- Страница 10 -->
+                    <div id="page-10" class="page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Персей (Настоящее)</h3>
+                        <p>Вторая сила — это Персей. Это наше настоящее и наш Щит-Зеркало. Он помогает смотреть на мир и на самих себя без иллюзий. Прямой взгляд на страхи парализует, но отражение в Щите теряет свою власть. Персей дает нам силу признать: «Я сам это создал, и у меня есть свобода воли это изменить».</p>
+                    </div>
+
+                    <!-- Страница 11 -->
+                    <div id="page-11" class="page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Алиса (Будущее)</h3>
+                        <p>Третья сила — Алиса. Это наше будущее и наш внутренний проводник. Когда прошлое побеждено, а настоящее осознано, Алиса берёт нас за руку и ведет к новой жизни.</p>
+                    </div>
+
+                    <!-- Страница 12 (Финал) -->
+                    <div id="page-12" class="page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Ты — Творец</h3>
+                        <p style="text-align: center; color: var(--gold); font-style: italic; margin-top: 20px; font-size: 1.2rem;">Ты не жертва обстоятельств. Ты — Творец. Собери себя в Точке Ноль, и мир вокруг начнёт меняться.</p>
+                    </div>
+
+                    <!-- Навигация -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 25px; padding-top: 15px; border-top: 1px dashed rgba(255, 217, 138, 0.2);">
+                        <button id="prevBtn" onclick="changePage(-1)" disabled style="background: rgba(255, 217, 138, 0.1); border: 1px solid var(--gold); color: var(--gold); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: 0.3s; font-family: var(--font-body);">← Назад</button>
+                        <span id="pageIndicator" style="font-size: 0.85rem; color: var(--muted); font-style: italic;">Стр. 1 из 12</span>
+                        <button id="nextBtn" onclick="changePage(1)" style="background: rgba(255, 217, 138, 0.1); border: 1px solid var(--gold); color: var(--gold); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: 0.3s; font-family: var(--font-body);">Вперед →</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+		
+        <!-- КЛЮЧЕВЫЕ ПОНЯТИЯ -->
+    <section id="legend" style="padding: 60px 20px; display: flex; flex-direction: column; align-items: center; border-bottom: 1px dashed rgba(255,255,255,0.05);">
+        <div style="width: 100%; max-width: 600px; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 14px; border: 1px solid rgba(255, 217, 138, 0.3); box-sizing: border-box;">
+           
+            <!-- Главная кнопка -->
+            <button onclick="toggleConcepts('main-content', 'icon-main')" style="width: 100%; padding: 20px; background: rgba(0,0,0,0.6); border: 1px solid var(--gold); color: var(--gold); border-radius: 14px; font-size: 1.5rem; cursor: pointer; display: flex; justify-content: center; align-items: center; font-family: var(--font-title); transition: 0.3s; position: relative;">
+                <span>📖 Ключевые понятия</span>
+                <span id="icon-main" style="font-family: sans-serif; position: absolute; right: 20px;">🔽</span>
+            </button>
+
+            <!-- Первый уровень вложенности -->
+            <div id="main-content" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out;">
+                <div style="margin-top: 15px; padding-left: 15px; border-left: 2px solid rgba(255, 217, 138, 0.2);">
+                   
+                    <!-- Кнопка История -->
+                    <button onclick="toggleConcepts('terms-content', 'icon-history')" style="width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255, 217, 138, 0.4); color: var(--gold); border-radius: 10px; font-size: 1.1rem; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-body); transition: 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                        <span>История, которая объясняет всё</span>
+                        <span id="icon-history" style="font-family: sans-serif;">🔽</span>
+                    </button>
+
+                    <!-- Второй уровень вложенности (Список терминов) -->
+                    <div id="terms-content" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; padding-left: 15px; margin-top: 10px;">
+                       
+                        <!-- Ум -->
+                        <button onclick="toggleTerm('mind')" class="state-btn"><span>Ум (Логика)</span><span id="icon-mind">🔽</span></button>
+                        <div id="text-mind" class="state-text">Способность человека анализировать, структурировать информацию и видеть причинно-следственные связи. Это инструмент для построения границ и понимания того, как устроен мир. Когда ум синхронизирован с Точкой Ноль, он становится кристально ясным, свободным от иллюзий и страхов. Это инструмент, который помогает принимать решения и выбирать направление движения.</div>
+
+                        <!-- Эмоции -->
+                        <button onclick="toggleTerm('emotions')" class="state-btn"><span>Эмоции</span><span id="icon-emotions">🔽</span></button>
+                        <div id="text-emotions" class="state-text">Язык души и энергетический отклик на происходящее. Это мощные потоки энергии, которые окрашивают реальность в разные тона. Когда эмоции синхронизированы с Точкой Ноль, они перестают быть разрушительными (страх, обида). Они трансформируются в созидательную силу — благодарность и любовь, которые питают человека и притягивают гармоничные события.</div>
+
+                        <!-- Состояние (Тело) -->
+                        <button onclick="toggleTerm('state')" class="state-btn"><span>Состояние (Тело)</span><span id="icon-state">🔽</span></button>
+                        <div id="text-state" class="state-text">Физический и энергетический фундамент существования. Тело — это проводник, через который душа взаимодействует с миром. В нём хранятся все переживания и зажимы. Когда тело синхронизировано с Точкой Ноль, оно освобождается от блоков и становится идеальным проводником высоких вибраций. Состояние отражает уровень внутренней гармонии: от тяжести до невесомости.</div>
+
+                        <button onclick="toggleTerm('vector')" class="state-btn"><span>Вектор</span><span id="icon-vector">🔽</span></button>
+                        <div id="text-vector" class="state-text">Равнодействующая всех внутренних сил (Ума, Эмоций и Тела). Это направление, в котором движется жизнь. Вектор — это не просто среднее арифметическое, а результирующая траектория. Положительный Вектор означает движение к балансу и развитию, отрицательный — уход от себя и потерю энергии. Осознанное удержание Вектора в нейтральной точке (Точке Ноль) даёт свободу выбора.</div>
+
+                        <button onclick="toggleTerm('vibrations')" class="state-btn"><span>Вибрации</span><span id="icon-vibrations">🔽</span></button>
+                        <div id="text-vibrations" class="state-text">Частота энергетического излучения человека. Мысль и эмоция имеют свою вибрацию. Низкие вибрации (страх, гнев, апатия) уплотняют энергию и притягивают тяжёлые события. Высокие вибрации (благодарность, любовь, покой) расширяют сознание и гармонизируют пространство. Уровень вибраций — это уровень осознанности и качества жизни.</div>
+
+                        <button onclick="toggleTerm('shield')" class="state-btn"><span>Щит Персея</span><span id="icon-shield">🔽</span></button>
+                        <div id="text-shield" class="state-text">Инструмент осознанного наблюдения. В мифе Персей использовал зеркальный щит, чтобы не смотреть на Горгону напрямую. В нашей системе Щит — это способность смотреть на свои страхи, мысли и прошлое со стороны. Это метафора отделения себя от негативных программ. Щит позволяет видеть реальность без искажений и не позволять прошлому управлять настоящим.</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ДНЕВНИК -->
+    <section id="stage-4">
+        <div class="section-title">
+            <h2>Мой путь (Дневник)</h2>
+            <p>Записывай свои осознания здесь</p>
+        </div>
+        <div class="calendar-section">
+            <div class="calendar-header">
+                <button class="cal-nav-btn" onclick="changeMonth(-1)">‹</button>
+                <h3 id="cal-title">Месяц</h3>
+                <button class="cal-nav-btn" onclick="changeMonth(1)">›</button>
+            </div>
+            <div class="calendar-grid" id="calendar-grid"></div>
+            <button onclick="openPrintPicker()" style="width: 100%; margin-top: 20px; padding: 14px; background: transparent; border: 1px solid var(--gold); color: var(--gold); border-radius: 10px; cursor: pointer; font-weight: bold; font-family: var(--font-body); transition: 0.3s;" onmouseover="this.style.background='var(--gold)'; this.style.color='var(--bg)';" onmouseout="this.style.background='transparent'; this.style.color='var(--gold)';">💾 Скачать за период</button>
+        </div>
+        <div style="max-width: 600px; width: 100%;">
+            <textarea id="diary-text" class="diary-input" placeholder="Напиши, что ты осознал(а) сейчас..."></textarea>
+            <button class="btn-save" onclick="saveDiaryNote()">Сохранить запись</button>
+            <button onclick="toggleHistory()" style="width: 100%; padding: 15px; background: rgba(0,0,0,0.4); border: 1px solid var(--muted); color: var(--text); border-radius: var(--r-md); cursor: pointer; font-weight: 500; margin-bottom: 15px; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: 0.3s;">
+                <span>📜 История записей</span>
+                <span id="history-icon">🔽</span>
+            </button>
+            <p style="font-size: 0.75rem; color: var(--muted); margin-top: -10px; margin-bottom: 15px; text-align: left; padding-left: 5px;">(Удаляя запись из истории, вы удаляете её и из календаря)</p>
+            <div id="history-container" style="display: none;">
+            <div id="diary-list"></div>
+        </div>
+    </section>
+
+    <script>
+        // ==========================================
+        // 1. КОМПАС
+        // ==========================================
+        let currentVals = { logic: 0, emotion: 0, state: 0 };
+        let activePicker = null;
+
+        const balanceData = {
+            logic: [
+                { v: -9, t: "В голове полный хаос." }, { v: -8, t: "Сильная тревога." }, { v: -7, t: "Ум перегружен." }, { v: -6, t: "Сильный туман." }, { v: -5, t: "Неуверенность." }, { v: -4, t: "Рассеянность." }, { v: -3, t: "Мысли замедлены." }, { v: -2, t: "Легкий туман." }, { v: -1, t: "Ясность нестабильна." },
+                { v: 0, t: "Спокойный, ясный ум." },
+                { v: 1, t: "Легкая ясность." }, { v: 2, t: "Спокойная собранность." }, { v: 3, t: "Ум работает четко." }, { v: 4, t: "Хорошая структурность." }, { v: 5, t: "Ясность и проницательность." }, { v: 6, t: "Четкая логика." }, { v: 7, t: "Ум как часы." }, { v: 8, t: "Прозрачность мышления." }, { v: 9, t: "Лазерная ясность." }
+            ],
+            emotion: [
+                { v: -9, t: "Полная закрытость." }, { v: -8, t: "Сильная обида." }, { v: -7, t: "Тревога и страх." }, { v: -6, t: "Раздражение." }, { v: -5, t: "Тяжесть." }, { v: -4, t: "Негативный фон." }, { v: -3, t: "Приглушенность." }, { v: -2, t: "Легкая тревога." }, { v: -1, t: "Нестабильность." },
+                { v: 0, t: "Ровная нейтральность." },
+                { v: 1, t: "Мягкость." }, { v: 2, t: "Умиротворение." }, { v: 3, t: "Открытость." }, { v: 4, t: "Желание делиться." }, { v: 5, t: "Доверие к миру." }, { v: 6, t: "Безопасность." }, { v: 7, t: "Вдохновение." }, { v: 8, t: "Любовь к миру." }, { v: 9, t: "Состояние света." }
+            ],
+            state: [
+                { v: -9, t: "Полный упадок." }, { v: -8, t: "Сильная слабость." }, { v: -7, t: "Вялость." }, { v: -6, t: "Тело падает." }, { v: -5, t: "Зажимы." }, { v: -4, t: "Усталость." }, { v: -3, t: "Слабость." }, { v: -2, t: "Замедленность." }, { v: -1, t: "Нестабильность." },
+                { v: 0, t: "Тело расслаблено." },
+                { v: 1, t: "Легкий тонус." }, { v: 2, t: "Бодрость." }, { v: 3, t: "Лёгкость." }, { v: 4, t: "Приятное движение." }, { v: 5, t: "Поток." }, { v: 6, t: "Живость." }, { v: 7, t: "Высокая вибрация." }, { v: 8, t: "Ощущение полета." }, { v: 9, t: "Невесомость." }
+            ]
+        };
+
+        function toggleHelp() { document.getElementById('help-content').classList.toggle('open'); }
+        function toggleVectorResult() { document.getElementById('vector-result-wrapper').classList.toggle('open'); }
+
+        function openPicker(type) {
+            const picker = document.getElementById('value-picker');
+            const title = document.getElementById('picker-title');
+            const optionsContainer = document.getElementById('picker-options');
+            if (activePicker === type && picker.classList.contains('show')) { closePicker(); return; }
+            activePicker = type;
+            optionsContainer.innerHTML = '';
+            if (type === 'logic') title.innerText = "Логика";
+            if (type === 'emotion') title.innerText = "Эмоции";
+            if (type === 'state') title.innerText = "Состояние";
+            balanceData[type].forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'value-option' + (item.v === currentVals[type] ? ' selected' : '');
+                div.innerText = (item.v > 0 ? '+' : '') + item.v + ' — ' + item.t;
+                div.onclick = (e) => { e.stopPropagation(); selectValue(type, item.v); };
+                optionsContainer.appendChild(div);
+            });
+            picker.classList.add('show');
+        }
+        function closePicker() { document.getElementById('value-picker').classList.remove('show'); activePicker = null; }
+        function selectValue(type, val) {
+            currentVals[type] = val;
+            document.getElementById('ci-' + (type === 'logic' ? 'x' : type === 'emotion' ? 'y' : 'z')).innerText = (val > 0 ? '+' : '') + val;
+            closePicker();
+            updateBalance();
+        }
+
+        function updateBalance() {
+            const x = currentVals.logic, y = currentVals.emotion, z = currentVals.state;
+            const avgVal = Math.round((x + y + z) / 3);
+            document.getElementById('ci-avg').innerText = 'Вектор: ' + (avgVal > 0 ? '+' : '') + avgVal;
+           
+            let rT = "", rText = "";
+           
+            // Распределение текстов по 19 состояниям
+            if (avgVal === -9) { rT = "Полный паралич"; rText = "Ты в самой глубокой точке. Ум в хаосе, сердце закрыто, тело обесточено. Это не приговор, а дно, от которого можно оттолкнуться. Сейчас твоя главная задача — просто дышать и позволить этому состоянию быть. Не требуй от себя подвигов."; }
+            else if (avgVal === -8) { rT = "Сильное истощение"; rText = "Ты на пределе. Кажется, что мир рушится, и нет сил сопротивляться. Это сигнал от твоей системы: остановись. Сейчас важно проявить к себе максимум заботы и убрать любые требования."; }
+            else if (avgVal === -7) { rT = "Тяжелый туман"; rText = "Ты застрял в прошлом опыте. Ум перегружен, эмоции глухи, тело скованно. Ты пытаешься бороться, но тратишь последние силы. Пора перестать бороться и просто признать: 'Сейчас мне плохо'."; }
+            else if (avgVal === -6) { rT = "Ты уходишь от себя"; rText = "Все векторы в минусе. Ты чувствуешь внутренний раздрай: ум говорит одно, сердце другое, а тело сжимается от напряжения. Ты честно увидел правду. Это точка честности. Признав это, ты уже сделал первый шаг к выходу."; }
+            else if (avgVal === -5) { rT = "Сильный внутренний конфликт"; rText = "Ты находишься в состоянии 'качелей'. Тебя бросает из стороны в сторону. Важно не принимать сейчас глобальных решений. Найди тихое место и выровняй дыхание, чтобы снизить напряжение."; }
+            else if (avgVal === -4) { rT = "Потеря опоры"; rText = "Ты чувствуешь, что почва уходит из-под ног. Ты еще сопротивляешься, но негативные эмоции начинают брать верх. Перестань цепляться за старые сценарии. Отпусти контроль хотя бы на время."; }
+            else if (avgVal === -3) { rT = "Точка сомнений"; rText = "Ты уже не в глубокой яме, но еще не в гармонии. Ты ищешь выход, но боишься сделать неверный шаг. Разреши себе ошибаться. Ты на верном пути, просто пока стоишь на перепутье."; }
+            else if (avgVal === -2) { rT = "Легкий дисбаланс"; rText = "Что-то тянет назад, но уже есть проблески ясности. Ты начал замечать свои реакции. Это хороший знак — ты выходишь из автоматизмов. Продолжай наблюдать за собой."; }
+            else if (avgVal === -1) { rT = "Шаг от нуля"; rText = "Ты почти у цели. Есть легкая тревога, но она уже не управляет тобой. Ты чувствуешь, что можешь контролировать свою жизнь. Еще чуть-чуть, и ты окажешься в Точке Ноль."; }
+            else if (avgVal === 0) { rT = "Идеальный баланс"; rText = "Ты в Точке Ноль. Здесь нет прошлого и будущего. Ум чист, сердце спокойно, тело расслаблено. Ты — наблюдатель. Из этой тишины рождается истинная сила. Побудь здесь, напитайся этим состоянием."; }
+            else if (avgVal === 1) { rT = "Первые лучи"; rText = "Ты чувствуешь прилив энергии и легкость. Ты вырвался из минуса. Обрати внимание на этот вкус жизни. Поощряй себя за каждый шаг в этом состоянии."; }
+            else if (avgVal === 2) { rT = "Рост ясности"; rText = "Ты начинаешь видеть суть вещей. Эмоции стабильны, в теле появляется тонус. Ты — Творец своих мыслей. Продолжай фокусироваться на том, что приносит радость."; }
+            else if (avgVal === 3) { rT = "Состояние потока"; rText = "Ты набрал хороший ритм. Ты знаешь, чего хочешь. Ты действуешь из состояния спокойствия и уверенности. Ты сам создаешь свою реальность."; }
+            else if (avgVal === 4) { rT = "Твердая почва"; rText = "Ты чувствуешь опору внутри себя. Внешние обстоятельства больше не выбивают тебя из колеи. Ты знаешь свои цели и с уверенностью идешь к ним."; }
+            else if (avgVal === 5) { rT = "Сияние изнутри"; rText = "Ты в состоянии гармонии. Ты не просто плывешь по течению, ты управляешь им. Твой внутренний компас всегда показывает верное направление."; }
+            else if (avgVal === 6) { rT = "Кристальная ясность"; rText = "Твой ум как лазер, эмоции чисты, тело полно сил. Ты достиг высокой степени осознанности. Ты видишь мир без иллюзий и страха. Делись этим светом с другими."; }
+            else if (avgVal === 7) { rT = "Высокая вибрация"; rText = "Ты чувствуешь вдохновение и полет. Ты находишься в состоянии абсолютного доверия к миру. Ты не просто действуешь, ты творишь."; }
+            else if (avgVal === 8) { rT = "Абсолютная гармония"; rText = "Ты словно слился воедино с потоком жизни. Ты понимаешь знаки Вселенной. Ты — чистый проводник."; }
+            else if (avgVal === 9) { rT = "Полное растворение"; rText = "Ты на пике вибраций. Это состояние благости и безусловной любви. Ты вышел за пределы личности и ощущаешь единство со всем сущим. Ты дома."; }
+            else { rT = "Внутренний конфликт"; rText = "Твоя система в хаосе. Найди баланс."; }
+            
+			// Двигаем стрелки на новой шкале
+            const percentX = ((x + 9) / 18) * 100;
+            const percentY = ((y + 9) / 18) * 100;
+            const percentZ = ((z + 9) / 18) * 100;
+            const percentAvg = ((avgVal + 9) / 18) * 100;
+            const arrows = document.querySelectorAll('.scale-container .h-arrow');
+            if (arrows.length === 4) {
+                arrows[0].style.bottom = percentX + '%';
+                arrows[1].style.bottom = percentY + '%';
+                arrows[2].style.bottom = percentZ + '%';
+                arrows[3].style.bottom = percentAvg + '%';
+            }
+			
+            document.getElementById('balance-title').innerText = rT;
+            document.getElementById('balance-text').innerText = rText;
+           
+            // Обновление стрелок на визуальном компасе
+            const arrowX = document.getElementById('vis-x'), arrowY = document.getElementById('vis-y'), arrowZ = document.getElementById('vis-z'), arrowAvg = document.getElementById('vis-avg');
+            arrowX.style.height = (60 + Math.abs(x) * 5) + 'px'; arrowX.style.transform = `translateX(-50%) rotate(${x >= 0 ? 0 : 180}deg)`;
+            arrowY.style.height = (60 + Math.abs(y) * 5) + 'px'; arrowY.style.transform = `translateX(-50%) rotate(${y >= 0 ? 90 : -90}deg)`;
+            arrowZ.style.height = (60 + Math.abs(z) * 5) + 'px'; arrowZ.style.transform = `translateX(-50%) rotate(${z >= 0 ? -45 : 135}deg)`;
+            arrowAvg.style.height = (80 + Math.abs(avgVal) * 5) + 'px'; arrowAvg.style.transform = `translateX(-50%) rotate(${avgVal >= 0 ? 45 : -135}deg)`;
+			
+			// Исправление поворота стрелок на самом Компасе
+            arrowX.style.transform = `translateX(-50%) rotate(${x >= 0 ? 0 : 180}deg)`;
+            arrowY.style.transform = `translateX(-50%) rotate(${y >= 0 ? 90 : -90}deg)`;
+            arrowZ.style.transform = `translateX(-50%) rotate(${z >= 0 ? -45 : 135}deg)`;
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.axis-btn') && !e.target.closest('.value-picker')) { closePicker(); }
+        });
+
+        function saveCompassToDiary() {
+            const now = new Date();
+            const dateKey = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+            const dateStr = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }) + ' ' + now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+            const text = `Компас: Логика ${currentVals.logic}, Эмоции ${currentVals.emotion}, Состояние ${currentVals.state}.`;
+            let diary = JSON.parse(localStorage.getItem('dissertationDiary')) || [];
+            diary.push({ dateKey, dateStr, text });
+            localStorage.setItem('dissertationDiary', JSON.stringify(diary));
+            renderCalendar(); renderDiaryList();
+            alert('Показатели сохранены!');
+        }
+
+        // ==========================================
+        // 2. ЩИТ ПЕРСЕЯ
+        // ==========================================
+        let currentShieldWord = "";
+
+        function startShieldWork() {
+            const wordInput = document.getElementById('shield-word-input').value.trim();
+            if (!wordInput) { alert('Впиши слово.'); return; }
+            currentShieldWord = wordInput;
+            document.querySelectorAll('.shield-word-text').forEach(el => { el.innerText = currentShieldWord; });
+            const textareas = document.querySelectorAll('#stage-2 textarea');
+            textareas.forEach(ta => ta.value = '');
+            document.getElementById('shield-step-0').style.display = 'none';
+            document.getElementById('shield-step-1').style.display = 'block';
+            setTimeout(() => { const ta = document.querySelector('#shield-step-1 textarea'); if (ta) ta.focus(); }, 50);
+            const finalInput = document.getElementById('final-release-text');
+            if (finalInput) { finalInput.style.opacity = '1'; }
+        }
+
+        function nextShieldStep(stepNumber) {
+            for (let i = 1; i <= 4; i++) document.getElementById('shield-step-' + i).style.display = 'none';
+            document.getElementById('shield-step-' + stepNumber).style.display = 'block';
+            const currentStep = document.getElementById('shield-step-' + stepNumber);
+            const textarea = currentStep.querySelector('textarea');
+            if (textarea) { setTimeout(() => { textarea.focus(); }, 50); }
+        }
+
+        function releaseShieldWord() {
+            const finalText = document.getElementById('final-release-text').value.trim();
+            if (!finalText) { alert('Напиши слово.'); return; }
+            const step1Text = document.querySelector('#shield-step-1 textarea').value.trim();
+            const step2Text = document.querySelector('#shield-step-2 textarea').value.trim();
+            const step3Text = document.querySelector('#shield-step-3 textarea').value.trim();
+            const word = document.getElementById('shield-word-input').value.trim() || 'Слово';
+
+            let fullText = `Щит Персея (${word})\n\n`;
+            if (step1Text) fullText += `Шаг 1: ${step1Text}\n\n`;
+            if (step2Text) fullText += `Шаг 2: ${step2Text}\n\n`;
+            if (step3Text) fullText += `Шаг 3: ${step3Text}\n\n`;
+            fullText += `Финал: ${finalText}`;
+
+            const now = new Date();
+            const dateKey = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+            const dateStr = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }) + ' ' + now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+            let diary = JSON.parse(localStorage.getItem('dissertationDiary')) || [];
+            diary.push({ dateKey, dateStr, text: fullText });
+            localStorage.setItem('dissertationDiary', JSON.stringify(diary));
+            renderCalendar(); renderDiaryList();
+
+            const input = document.getElementById('final-release-text');
+            input.style.opacity = '0';
+            const rect = input.getBoundingClientRect();
+            const sparkContainer = document.createElement('div');
+            sparkContainer.className = 'spark-container';
+            sparkContainer.style.left = rect.left + 'px';
+            sparkContainer.style.top = rect.top + 'px';
+            sparkContainer.style.width = rect.width + 'px';
+            sparkContainer.style.height = rect.height + 'px';
+            document.body.appendChild(sparkContainer);
+
+            for (let i = 0; i < 60; i++) {
+                const spark = document.createElement('div');
+                spark.className = 'spark';
+                spark.style.setProperty('--x', (Math.random() - 0.5) * 300 + 'px');
+                spark.style.setProperty('--y', (Math.random() - 0.5) * 200 + 'px');
+                sparkContainer.appendChild(spark);
+            }
+
+            setTimeout(() => {
+                sparkContainer.remove();
+                document.getElementById('shield-final-message').style.display = 'block';
+                const nextBtn = document.querySelector('#shield-final-message button');
+                if (nextBtn) {
+                    nextBtn.onclick = function() {
+                        document.getElementById('shield-step-1').style.display = 'none';
+                        document.getElementById('shield-step-2').style.display = 'none';
+                        document.getElementById('shield-step-3').style.display = 'none';
+                        document.getElementById('shield-step-4').style.display = 'none';
+                        document.getElementById('shield-step-0').style.display = 'block';
+                        document.getElementById('shield-word-input').value = '';
+                        document.getElementById('stage-3').scrollIntoView({behavior: 'smooth'});
+                        return false;
+                    };
+                }
+            }, 3000);
+        }
+
+        // ==========================================
+        // 3. ДНЕВНИК И КАЛЕНДАРЬ
+        // ==========================================
+        let calViewYear = new Date().getFullYear();
+        let calViewMonth = new Date().getMonth();
+
+        function changeMonth(delta) {
+            calViewMonth += delta;
+            if (calViewMonth < 0) { calViewMonth = 11; calViewYear--; }
+            if (calViewMonth > 11) { calViewMonth = 0; calViewYear++; }
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            const grid = document.getElementById('calendar-grid');
+            grid.innerHTML = '';
+            const monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+            document.getElementById('cal-title').innerText = `${monthNames[calViewMonth]} ${calViewYear}`;
+            ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].forEach(d => { let div = document.createElement('div'); div.className = 'cal-day-name'; div.innerText = d; grid.appendChild(div); });
+            const firstDay = new Date(calViewYear, calViewMonth, 1).getDay();
+            const daysInMonth = new Date(calViewYear, calViewMonth + 1, 0).getDate();
+            let startOffset = firstDay === 0 ? 6 : firstDay - 1;
+            for (let i = 0; i < startOffset; i++) { grid.appendChild(document.createElement('div')); }
+            let diaryData = JSON.parse(localStorage.getItem('dissertationDiary')) || [];
+            const today = new Date();
+            for (let i = 1; i <= daysInMonth; i++) {
+                let dayStr = i < 10 ? '0' + i : i;
+                let monthStr = (calViewMonth + 1) < 10 ? '0' + (calViewMonth + 1) : (calViewMonth + 1);
+                let dateKey = `${calViewYear}-${monthStr}-${dayStr}`;
+                let div = document.createElement('div');
+                div.className = 'cal-day';
+                div.innerText = i;
+                if (calViewYear === today.getFullYear() && calViewMonth === today.getMonth() && i === today.getDate()) div.classList.add('today');
+                if (diaryData.some(entry => entry.dateKey === dateKey)) {
+                    div.classList.add('has-data');
+                }
+                div.onclick = function() { openDayModal(dateKey); };
+                div.style.cursor = 'pointer';
+                grid.appendChild(div);
+            }
+        }
+
+        function saveDiaryNote() {
+            const text = document.getElementById('diary-text').value.trim();
+            if (!text) { alert('Напиши что-нибудь.'); return; }
+            const now = new Date();
+            const dateKey = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+            const dateStr = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }) + ' ' + now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+            let diary = JSON.parse(localStorage.getItem('dissertationDiary')) || [];
+            diary.push({ dateKey, dateStr, text });
+            localStorage.setItem('dissertationDiary', JSON.stringify(diary));
+            document.getElementById('diary-text').value = '';
+            renderCalendar(); renderDiaryList();
+        }
+
+        function renderDiaryList() {
+            const list = document.getElementById('diary-list');
+            list.innerHTML = '';
+            let diary = JSON.parse(localStorage.getItem('dissertationDiary')) || [];
+            if (diary.length === 0) { list.innerHTML = '<p style="color: var(--muted);">Твой дневник пока пуст.</p>'; return; }
+            diary.slice().reverse().forEach((item, index) => {
+                const realIndex = diary.length - 1 - index;
+                const div = document.createElement('div');
+                div.className = 'diary-entry';
+                div.innerHTML = `<span class="time">${item.dateStr}</span><div style="font-style: italic; white-space: pre-wrap;">${item.text}</div><button class="btn-del" onclick="deleteDiaryNote(${realIndex})">✕</button>`;
+                list.appendChild(div);
+            });
+        }
+
+        function deleteDiaryNote(index) {
+            if (!confirm('Удалить?')) return;
+            let diary = JSON.parse(localStorage.getItem('dissertationDiary')) || [];
+            diary.splice(index, 1);
+            localStorage.setItem('dissertationDiary', JSON.stringify(diary));
+            renderCalendar(); renderDiaryList();
+        }
+
+        function openPrintPicker() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('print-from').value = today;
+            document.getElementById('print-to').value = today;
+            document.getElementById('print-picker').style.display = 'flex';
+        }
+
+        function closePrintPicker() {
+            document.getElementById('print-picker').style.display = 'none';
+        }
+
+        function downloadPeriod() {
+            const fromVal = document.getElementById('print-from').value;
+            const toVal = document.getElementById('print-to').value;
+
+            if (!fromVal || !toVal) { alert('Выбери обе даты.'); return; }
+            if (fromVal > toVal) { alert('Дата "с" не может быть позже даты "по".'); return; }
+
+            const diaryData = JSON.parse(localStorage.getItem('dissertationDiary')) || [];
+            const filtered = diaryData.filter(item => {
+                const itemDate = item.dateKey;
+                return itemDate >= fromVal && itemDate <= toVal;
+            });
+
+            if (filtered.length === 0) {
+                alert('За выбранный период записей нет.');
+                return;
+            }
+
+            let text = "МОЙ ПУТЬ — ТОЧКА НОЛЬ\n";
+            text += "Период: " + fromVal + " — " + toVal + "\n";
+            text += "===================================\n\n";
+
+            filtered.forEach(item => {
+                text += "📅 " + item.dateStr + "\n";
+                text += item.text + "\n";
+                text += "===================================\n\n";
+            });
+
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'moy-put-' + fromVal + '_' + toVal + '.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            closePrintPicker();
+        }
+
+        function openDayModal(dateKey) {
+            const modal = document.getElementById('day-modal');
+            const title = document.getElementById('day-modal-title');
+            const content = document.getElementById('day-modal-content');
+
+            let diary = JSON.parse(localStorage.getItem('dissertationDiary')) || [];
+            const dayEntries = diary.filter(item => item.dateKey === dateKey);
+
+            const parts = dateKey.split('-');
+            const dateObj = new Date(parts[0], parts[1] - 1, parts[2]);
+            const dateStr = dateObj.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+            title.innerText = `Записи за ${dateStr}`;
+
+            content.innerHTML = '';
+
+            if (dayEntries.length === 0) {
+                content.innerHTML = '<p style="color: var(--muted); text-align: center;">В этот день записей нет.</p>';
+            } else {
+                dayEntries.forEach(entry => {
+                    const div = document.createElement('div');
+                    div.className = 'diary-entry';
+                    div.style.marginBottom = '10px';
+                    div.innerHTML = `<span class="time" style="font-size:0.8rem; color:var(--muted);">${entry.dateStr}</span><div style="font-style: italic; white-space: pre-wrap; margin-top: 5px;">${entry.text}</div>`;
+                    content.appendChild(div);
+                });
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        function closeDayModal() {
+            document.getElementById('day-modal').style.display = 'none';
+        }
+
+        // Кнопка наверх
+        window.onscroll = function() {
+            const btn = document.getElementById('scrollTopBtn');
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                btn.style.display = 'flex';
+            } else {
+                btn.style.display = 'none';
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleNewVector() {
+            const content = document.getElementById('new-vector-content');
+            const icon = document.getElementById('new-vector-icon');
+
+            if (content.style.maxHeight === '0px' || content.style.maxHeight === '') {
+                content.style.maxHeight = content.scrollHeight + 'px';
+				
+				// Запуск анимации после раскрытия окна
+                const container = document.getElementById('circles-container');
+                if (container) {
+                    container.classList.remove('assembled'); // Сбрасываем анимацию (чтобы круги снова разъехались)
+                    setTimeout(() => {
+                        container.classList.add('assembled'); // Запускаем сборку через 1.2 секунды
+                    }, 2000); // Вы можете менять это число (1200 = 1.2 сек), чтобы сделать паузу длиннее или короче
+                }
+                content.style.border = '1px solid var(--gold)';
+                icon.innerText = '🔼';
+            } else {
+                const container = document.getElementById('circles-container');
+                if (container) { container.classList.remove('assembled'); }
+                content.style.maxHeight = '0px';
+                content.style.border = '1px solid transparent';
+                icon.innerText = '🔽';
+            }
+
+            const x = currentVals.logic;
+            const y = currentVals.emotion;
+            const z = currentVals.state;
+            const avg = Math.round((x + y + z) / 3);
+
+            const percentX = ((x + 9) / 18) * 100;
+            const percentY = ((y + 9) / 18) * 100;
+            const percentZ = ((z + 9) / 18) * 100;
+            const percentAvg = ((avg + 9) / 18) * 100;
+
+            const arrows = document.querySelectorAll('#new-vector-content .h-arrow');
+
+            if (arrows.length === 4) {
+                arrows[0].style.bottom = percentX + '%';
+                arrows[1].style.bottom = percentY + '%';
+                arrows[2].style.bottom = percentZ + '%';
+                arrows[3].style.bottom = percentAvg + '%';
+            }
+        }
+
+        function saveNewVectorAction() {
+            const text = document.getElementById('new-vector-text').value.trim();
+            if (!text) { alert('Напиши хотя бы одно действие.'); return; }
+
+            const now = new Date();
+            const dateKey = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+            const dateStr = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }) + ' ' + now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+
+            const word = document.getElementById('shield-word-input').value.trim() || 'Слово';
+
+            let diary = JSON.parse(localStorage.getItem('dissertationDiary')) || [];
+            diary.push({
+                dateKey: dateKey,
+                dateStr: dateStr,
+                text: `Новый Вектор (${word}) — Мое действие: ${text}`
+            });
+            localStorage.setItem('dissertationDiary', JSON.stringify(diary));
+
+            renderCalendar();
+            renderDiaryList();
+
+            document.getElementById('new-vector-text').value = '';
+            alert('Твой новый шаг сохранен в Дневник!');
+        }
+
+        // ==========================================
+        // 4. АТЛАС СОСТОЯНИЙ (УМНЫЙ АККОРДЕОН)
+        // ==========================================
+        let currentlyOpenState = null;
+
+        function toggleAtlas() {
+            const content = document.getElementById('atlas-content');
+            const icon = document.getElementById('atlas-icon');
+            if (content.style.maxHeight === '0px' || content.style.maxHeight === '') {
+                content.style.maxHeight = '2000px';
+                icon.innerText = '🔼';
+            } else {
+                content.style.maxHeight = '0px';
+                icon.innerText = '🔽';
+            }
+        }
+
+        function toggleLevel(level) {
+            const content = document.getElementById('level-' + level);
+            const icon = document.getElementById('icon-' + level);
+            if (content.style.maxHeight === '0px' || content.style.maxHeight === '') {
+                content.style.maxHeight = '1000px';
+                icon.innerText = '🔼';
+            } else {
+                content.style.maxHeight = '0px';
+                icon.innerText = '🔽';
+            }
+        }
+
+        function openStateText(stateId) {
+            const textBlock = document.getElementById('text-' + stateId);
+            if (!textBlock) return;
+
+            if (currentlyOpenState === stateId) {
+                textBlock.classList.remove('state-text-open');
+                textBlock.style.display = 'none';
+                currentlyOpenState = null;
+            } else {
+                if (currentlyOpenState) {
+                    const prev = document.getElementById('text-' + currentlyOpenState);
+                    if (prev) {
+                        prev.classList.remove('state-text-open');
+                        prev.style.display = 'none';
+                    }
+                }
+                textBlock.style.display = 'block';
+                void textBlock.offsetWidth;
+                textBlock.classList.add('state-text-open');
+                currentlyOpenState = stateId;
+            }
+            updateAtlasHeights();
+        }
+
+        function updateAtlasHeights() {
+            const atlas = document.getElementById('atlas-content');
+            if (atlas && atlas.style.maxHeight !== '0px' && atlas.style.maxHeight !== '') {
+                atlas.style.maxHeight = 'none';
+                const realHeight = atlas.scrollHeight;
+                atlas.style.maxHeight = realHeight + 'px';
+            }
+
+            ['low', 'mid', 'high'].forEach(level => {
+                const el = document.getElementById('level-' + level);
+                if (el && el.style.maxHeight !== '0px' && el.style.maxHeight !== '') {
+                    el.style.maxHeight = 'none';
+                    const realHeight = el.scrollHeight;
+                    el.style.maxHeight = realHeight + 'px';
+                }
+            });
+        }
+
+        // ГЛОБАЛЬНАЯ ФУНКЦИЯ ДЛЯ ШКАЛЫ
+        function showStateFromScale(stateId) {
+            const sourceText = document.getElementById('text-' + stateId);
+            const infoBox = document.getElementById('scale-info-box');
+           
+            if (sourceText && infoBox) {
+                infoBox.innerHTML = '<strong style="color: var(--gold);">Описание:</strong><br>' + sourceText.innerHTML;
+                infoBox.style.display = 'block';
+                infoBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function toggleFAQ() {
+            const content = document.getElementById('faq-content');
+            const icon = document.getElementById('faq-icon');
+            if (content.style.maxHeight === '0px' || content.style.maxHeight === '') {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                content.style.border = '1px solid var(--gold)';
+                icon.innerText = '🔼';
+            } else {
+                content.style.maxHeight = '0px';
+                content.style.border = '1px solid transparent';
+                icon.innerText = '🔽';
+            }
+        }
+
+        function toggleHistory() {
+            const container = document.getElementById('history-container');
+            const icon = document.getElementById('history-icon');
+            if (container.style.display === 'none') {
+                container.style.display = 'block';
+                icon.innerText = '🔼';
+            } else {
+                container.style.display = 'none';
+                icon.innerText = '🔽';
+            }
+        }
+        
+		// СКРИПТ ДЛЯ ЛЕГЕНДЫ
+        function toggleLegend() {
+            const content = document.getElementById('legend-content');
+            const icon = document.getElementById('legend-icon');
+            if (content.style.maxHeight === '0px' || content.style.maxHeight === '') {
+                content.style.maxHeight = '2000px';
+                icon.innerText = '🔼';
+            } else {
+                content.style.maxHeight = '0px';
+                icon.innerText = '🔽';
+            }
+        }
+
+        function toggleLegendText(id) {
+            const text = document.getElementById('legend-' + id);
+            if (text.style.display === 'block') {
+                text.style.display = 'none';
+            } else {
+                text.style.display = 'block';
+            }
+        }
+		
+		// Открытие текста о Точке Ноль
+        function toggleHeroText() {
+            const content = document.getElementById('hero-text-content');
+            if (content.style.maxHeight === '0px' || content.style.maxHeight === '') {
+                content.style.maxHeight = content.scrollHeight + 'px';
+            } else {
+                content.style.maxHeight = '0px';
+            }
+        }
+		
+		// Аккордеон для Трех сил
+        function toggleForce(id) {
+            const text = document.getElementById('text-' + id);
+            const icon = document.getElementById('icon-' + id);
+            if (text.style.maxHeight === '0px' || text.style.maxHeight === '') {
+                text.style.maxHeight = text.scrollHeight + 'px';
+                icon.innerText = '🔼';
+            } else {
+                text.style.maxHeight = '0px';
+                icon.innerText = '🔽';
+            }
+        }
+		
+		// Логика для Ключевых понятий
+        function toggleConcepts(contentId, iconId) {
+            const content = document.getElementById(contentId);
+            const icon = document.getElementById(iconId);
+            if (content.style.maxHeight === '0px' || content.style.maxHeight === '') {
+                content.style.maxHeight = '2000px';
+                icon.innerText = '🔼';
+            } else {
+                content.style.maxHeight = '0px';
+                icon.innerText = '🔽';
+            }
+        }
+
+        function toggleTerm(id) {
+            const text = document.getElementById('text-' + id);
+            const icon = document.getElementById('icon-' + id);
+            if (text) {
+                if (text.style.display === 'block') {
+                    text.style.display = 'none';
+                    if (icon) icon.innerText = '🔽';
+                } else {
+                    text.style.display = 'block';
+                    if (icon) icon.innerText = '🔼';
+                }
+            }
+        }
+		
+		// Логика для Легенды (Книги)
+        let currentPage = 1;
+        const totalPages = 12;
+
+        function toggleLegendBook() {
+            const wrapper = document.getElementById('book-wrapper');
+            const icon = document.getElementById('icon-legend');
+            if (wrapper.style.maxHeight === '0px' || wrapper.style.maxHeight === '') {
+                wrapper.style.maxHeight = '1500px';
+                icon.innerText = '🔼';
+            } else {
+                wrapper.style.maxHeight = '0px';
+                icon.innerText = '🔽';
+            }
+        }
+
+        function changePage(direction) {
+            document.getElementById('page-' + currentPage).classList.remove('active');
+            document.getElementById('page-' + currentPage).style.display = 'none';
+           
+            currentPage += direction;
+           
+            document.getElementById('page-' + currentPage).classList.add('active');
+            document.getElementById('page-' + currentPage).style.display = 'block';
+           
+            document.getElementById('pageIndicator').innerText = `Стр. ${currentPage} из ${totalPages}`;
+            document.getElementById('prevBtn').disabled = (currentPage === 1);
+            document.getElementById('nextBtn').disabled = (currentPage === totalPages);
+        }
+		
+        window.onload = function() {
+            
+            // Стандартные функции сайта
+            updateBalance();
+            renderCalendar();
+            renderDiaryList();
+        };
+    </script>
+
+    <!-- Окно скачивания -->
+    <div class="print-picker-overlay" id="print-picker" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,5,20,0.9); display: none; align-items: center; justify-content: center; z-index: 1000;">
+        <div style="background: #1A1125; border: 2px solid #FFD98A; border-radius: 20px; padding: 30px; text-align: center; width: 90%; max-width: 400px;">
+            <h3 style="color: #FFD98A; margin-bottom: 20px; font-family: var(--font-title); font-size: 1.5rem;">Скачать за период</h3>
+            <input type="date" id="print-from" style="width: 100%; padding: 12px; margin-bottom: 10px; background: rgba(0,0,0,0.5); border: 1px solid #7EC8FF; border-radius: 14px; color: #fff; font-family: var(--font-body); outline: none;">
+            <input type="date" id="print-to" style="width: 100%; padding: 12px; margin-bottom: 20px; background: rgba(0,0,0,0.5); border: 1px solid #7EC8FF; border-radius: 14px; color: #fff; font-family: var(--font-body); outline: none;">
+            <button onclick="downloadPeriod()" style="width: 100%; padding: 15px; background: #FFD98A; color: #120A1F; border: none; border-radius: 14px; font-weight: bold; cursor: pointer; margin-bottom: 10px; font-family: var(--font-body); font-size: 1rem;">Скачать файл</button>
+            <button onclick="closePrintPicker()" style="width: 100%; padding: 15px; background: transparent; color: #fff; border: 1px solid #fff; border-radius: 14px; cursor: pointer; font-family: var(--font-body); font-size: 1rem;">Отмена</button>
+        </div>
+    </div>
+
+    <!-- ОКНО ПРОСМОТРА ДНЯ -->
+    <div id="day-modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,5,20,0.9); display: none; align-items: center; justify-content: center; z-index: 2000;">
+        <div style="background: #1A1125; border: 2px solid var(--gold); border-radius: 20px; padding: 30px; text-align: center; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto;">
+            <h3 id="day-modal-title" style="color: var(--gold); margin-bottom: 20px; font-family: var(--font-title); font-size: 1.5rem;">Записи за день</h3>
+            <div id="day-modal-content" style="text-align: left; margin-bottom: 20px;"></div>
+            <button onclick="closeDayModal()" style="width: 100%; padding: 15px; background: var(--gold); color: var(--bg); border: none; border-radius: 14px; font-weight: bold; cursor: pointer; font-size: 1rem;">Закрыть</button>
+        </div>
+    </div>
+
+    <!-- КАРТА САЙТА (FAQ) -->
+    <section id="faq-section" style="padding: 60px 20px; display: flex; flex-direction: column; align-items: center; border-top: 1px dashed rgba(255,255,255,0.1);">
+        <div class="section-title">
+            <h2>Карта сайта</h2>
+            <p>Ответы на главные вопросы о проекте</p>
+        </div>
+
+        <div style="max-width: 800px; width: 100%;">
+            <button onclick="toggleFAQ()" style="width: 100%; padding: 20px; background: rgba(0,0,0,0.6); border: 1px solid var(--gold); color: var(--gold); border-radius: 14px; font-size: 1.2rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-title); transition: 0.3s;">
+                <span>Узнать, как устроен проект</span>
+                <span id="faq-icon" style="font-family: sans-serif;">🔽</span>
+            </button>
+
+            <div id="faq-content" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; margin-top: 10px; background: rgba(0,0,0,0.4); border-radius: 14px; border: 1px solid transparent;">
+                <div style="padding: 20px;">
+
+                    <div style="margin-bottom: 15px;">
+                        <h3 style="color: var(--gold); margin-bottom: 10px; font-size: 1.1rem; font-family: var(--font-body);">1. Что такое система Горгона–Персей–Алиса?</h3>
+                        <p style="color: #ddd; font-size: 0.95rem; line-height: 1.6;">Это не миф и не сказка. Это <strong>карта твоей внутренней реальности</strong>. Три архетипа, три силы, которые живут внутри каждого из нас одновременно. Ты не можешь быть только Персеем или только Горгоной. Ты — это единство трех состояний: <strong>Горгона</strong> (твоё прошлое, опыт, страхи), <strong>Персей</strong> (твоё настоящее, осознанность и воля) и <strong>Алиса</strong> (твоё будущее, уверенность и знание пути). Система учит не воевать с собой, а собирать себя воедино в Точке Ноль.</p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <h3 style="color: var(--gold); margin-bottom: 10px; font-size: 1.1rem; font-family: var(--font-body);">2. Кто такая Горгона?</h3>
+                        <p style="color: #ddd; font-size: 0.95rem; line-height: 1.6;">В мифах её взгляд превращает всё в камень. В нашей системе <strong>Горгона — это твоё прошлое</strong>. Это опыт, который привел тебя сюда. Твои страхи, старые обиды, ошибки и навязанные роли. Когда мы постоянно смотрим в прошлое напрямую (прокручиваем обиды, боимся ошибок), мы перестаем двигаться вперед и «застываем». Но Горгона — это и твой «золотой запас». Задача не убить её, а посмотреть через Зеркало, поблагодарить за уроки и забрать свой опыт.</p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <h3 style="color: var(--gold); margin-bottom: 10px; font-size: 1.1rem; font-family: var(--font-body);">3. Почему Персей победил Горгону?</h3>
+                        <p style="color: #ddd; font-size: 0.95rem; line-height: 1.6;">Персей победил не силой, а <strong>осознанностью</strong>. Он не смотрел на Горгону напрямую, он смотрел на её отражение в Щите. Прямой взгляд на прошлое и страхи парализует. Но когда мы смотрим на них со стороны (через Зеркало мира, через понимание), они теряют свою власть. Твой Щит — это твоя способность наблюдать за собой и не позволять страхам превращать тебя в камень.</p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <h3 style="color: var(--gold); margin-bottom: 10px; font-size: 1.1rem; font-family: var(--font-body);">4. Кто такая Алиса?</h3>
+                        <p style="color: #ddd; font-size: 0.95rem; line-height: 1.6;">Алиса — это <strong>твоё будущее</strong> и твой внутренний проводник. Это та часть тебя, которая уже знает, куда идти. Она собрала воедино твою логику, эмоции и состояние. Она уважает твою свободу воли и никогда не поведет силой. Когда ты проходишь через страх и осознаешь его, именно Алиса берет тебя за руку и показывает самый экологичный маршрут.</p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <h3 style="color: var(--gold); margin-bottom: 10px; font-size: 1.1rem; font-family: var(--font-body);">5. Что такое Точка Ноль?</h3>
+                        <p style="color: #ddd; font-size: 0.95rem; line-height: 1.6;">Точка Ноль — это <strong>сердце нашего сайта</strong> и центр твоей внутренней вселенной. Это состояние, когда ты останавливаешься, сбрасываешь чужие ожидания и остаешься наедине с собой. В этой точке нет прошлого, которое тянет назад, и нет тревоги о будущем. Твои Ум, Сердце и Тело приходят в идеальный баланс. Только из этой тишины можно выбрать правильный вектор движения.</p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <h3 style="color: var(--gold); margin-bottom: 10px; font-size: 1.1rem; font-family: var(--font-body);">6. Это безопасно?</h3>
+                        <p style="color: #ddd; font-size: 0.95rem; line-height: 1.6;">Да, абсолютно. Это <strong>твой личный инструмент для саморефлексии</strong>. Здесь нет «гуру» и жесткого контроля. Всё, что ты пишешь в Дневнике, сохраняется только в памяти твоего браузера. Мы не собираем твои данные. Ты сам(а) решаешь, насколько глубоко заглянуть. Твоя свобода воли — главный закон этого пространства.</p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <h3 style="color: var(--gold); margin-bottom: 10px; font-size: 1.1rem; font-family: var(--font-body);">7. Что делает Навигатор Пути?</h3>
+                        <p style="color: #ddd; font-size: 0.95rem; line-height: 1.6;">Навигатор Пути (Компас) — это твой инструмент честной диагностики. С его помощью ты раскладываешь состояние на три составляющие: Логику, Эмоции и Тело. Он показывает точку, где ты находишься сейчас, вычисляя твой «Вектор». Если вектор в минусе — ты отклонился от своей Точки Ноль. Инструмент нужен, чтобы увидеть объективную картину своего внутреннего мира.</p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <h3 style="color: var(--gold); margin-bottom: 10px; font-size: 1.1rem; font-family: var(--font-body);">8. Для кого этот сайт?</h3>
+                        <p style="color: #ddd; font-size: 0.95rem; line-height: 1.6;">Этот сайт для тех, кто готов <strong>честно посмотреть на себя в Зеркало</strong>. Для тех, кто застрял в прошлом и хочет двигаться дальше. Для тех, кто устал от хаоса и хочет обрести ясность. Он не для тех, кто ищет волшебную таблетку или готовые ответы. Это пространство для работы над собой.</p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <h3 style="color: var(--gold); margin-bottom: 10px; font-size: 1.1rem; font-family: var(--font-body);">9. Нужно ли иметь опыт в психологии?</h3>
+                        <p style="color: #ddd; font-size: 0.95rem; line-height: 1.6;">Нет. Сайт говорит на простом, человеческом языке. Всё, что требуется — это честность с самим собой. Наша система образов (Горгона, Персей, Алиса) интуитивно понятна каждому. Твоя жизнь — лучший учебник, и тебе не нужен диплом, чтобы начать путь к себе.</p>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <h3 style="color: var(--gold); margin-bottom: 10px; font-size: 1.1rem; font-family: var(--font-body);">10. С чего начать?</h3>
+                        <p style="color: #ddd; font-size: 0.95rem; line-height: 1.6;">Начни с тишины. Сделай глубокий вдох и выдох. Затем прокрути страницу до Компаса и выставь свои текущие показатели. Посмотри на свой Вектор. А потом перейди в раздел «Осознание» (Щит Персея), введи слово, которое мешает тебе жить, и пройди три шага, чтобы отпустить его. Просто сделай первый шаг.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- КНОПКА НАВЕРХ -->
+    <button id="scrollTopBtn" onclick="scrollToTop()" style="display: none; position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background: rgba(26, 17, 37, 0.9); border: 1px solid var(--gold); border-radius: 50%; color: var(--gold); font-size: 20px; cursor: pointer; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease; align-items: center; justify-content: center;">
+        ↑
+    </button>
+
+// Защита от копирования и открытия кода (F12)
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        document.addEventListener('selectstart', function(e) {
+            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); }
+        });
+        document.addEventListener('dragstart', function(e) { e.preventDefault(); });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.keyCode === 73)) { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j' || e.keyCode === 74)) { e.preventDefault(); return false; }
+            if (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.keyCode === 85)) { e.preventDefault(); return false; }
+        });
+    </script>
+	
+</body>
+</html>

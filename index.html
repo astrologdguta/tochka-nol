@@ -737,13 +737,11 @@
     <section id="legend-book" style="padding: 60px 20px; display: flex; flex-direction: column; align-items: center; border-bottom: 1px dashed rgba(255,255,255,0.05);">
         <div style="width: 100%; max-width: 600px; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 14px; border: 1px solid rgba(255, 217, 138, 0.3); box-sizing: border-box;">
            
-            <!-- Главная кнопка (Легенда) -->
             <button onclick="toggleLegendBook()" style="width: 100%; padding: 20px; background: rgba(0,0,0,0.6); border: 1px solid var(--gold); color: var(--gold); border-radius: 14px; font-size: 1.5rem; cursor: pointer; display: flex; justify-content: center; align-items: center; font-family: var(--font-title); transition: 0.3s; position: relative;">
                 <span>📖 Легенда</span>
                 <span id="icon-legend" style="font-family: sans-serif; position: absolute; right: 20px;">🔽</span>
             </button>
 
-            <!-- Контейнер для книги (скрыт по умолчанию) -->
             <div id="book-wrapper" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; margin-top: 15px;">
                 <div style="background: rgba(255,255,255,0.02); padding: 30px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); min-height: 250px; display: flex; flex-direction: column; justify-content: space-between;">
                    
@@ -813,8 +811,26 @@
                         <p>Третья сила — Алиса. Это наше будущее и наш внутренний проводник. Когда прошлое побеждено, а настоящее осознано, Алиса берёт нас за руку и ведет к новой жизни.</p>
                     </div>
 
-                    <!-- Страница 12 (Финал) -->
+                    <!-- Страница 12 -->
                     <div id="page-12" class="page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Божественный Исходник</h3>
+                        <p>Существуют вещи, которые невозможно объяснить словами, потому что они созданы самим Богом. Точка Ноль — из их числа. Это не просто пустота, это Великий Исходник. Божественный адрес, изначальная ссылка на самого себя, которую каждый человек отчаянно пытается найти в суете внешнего мира.</p>
+                    </div>
+
+                    <!-- Страница 13 -->
+                    <div id="page-13" class="page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Геометрия тишины</h3>
+                        <p>Это место абсолютной внутренней сборки. Когда человек находит эту точку, всё движение замирает. Наступает Остановка — момент, когда утихают мысли, эмоции и физические импульсы. В этой тишине энергия не тратится впустую. Она накапливается, чтобы затем отдаться миру. Точка Ноль пропускает через себя информацию, позволяя принять её и передать дальше без искажений.</p>
+                    </div>
+
+                    <!-- Страница 14 -->
+                    <div id="page-14" class="page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Начало любой линии</h3>
+                        <p>Геометрия внутреннего мира подчиняется тем же законам. Точка Ноль может быть точкой, плоскостью или объемом. Три линии, исходящие из неё, рождают объем, создавая восемь блоков — так формируется наша реальность. Линия, равноудалённая от положительных значений, устремляется вверх, к свету, или уходит вниз, к самому центру Земли. Точка Ноль — это точка саморегуляции в системе трёх осей (Ума, Эмоций и Тела). Это начало любой линии, и в ней же эта линия может закончиться. Обрести эту точку — значит вернуть себе управление своей жизнью.</p>
+                    </div>
+
+                    <!-- Страница 15 (Финал) -->
+                    <div id="page-15" class="page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
                         <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Ты — Творец</h3>
                         <p style="text-align: center; color: var(--gold); font-style: italic; margin-top: 20px; font-size: 1.2rem;">Ты не жертва обстоятельств. Ты — Творец. Собери себя в Точке Ноль, и мир вокруг начнёт меняться.</p>
                     </div>
@@ -822,7 +838,7 @@
                     <!-- Навигация -->
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 25px; padding-top: 15px; border-top: 1px dashed rgba(255, 217, 138, 0.2);">
                         <button id="prevBtn" onclick="changePage(-1)" disabled style="background: rgba(255, 217, 138, 0.1); border: 1px solid var(--gold); color: var(--gold); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: 0.3s; font-family: var(--font-body);">← Назад</button>
-                        <span id="pageIndicator" style="font-size: 0.85rem; color: var(--muted); font-style: italic;">Стр. 1 из 12</span>
+                        <span id="pageIndicator" style="font-size: 0.85rem; color: var(--muted); font-style: italic;">Стр. 1 из 15</span>
                         <button id="nextBtn" onclick="changePage(1)" style="background: rgba(255, 217, 138, 0.1); border: 1px solid var(--gold); color: var(--gold); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: 0.3s; font-family: var(--font-body);">Вперед →</button>
                     </div>
 
@@ -1555,7 +1571,7 @@
 		
 		// Логика для Легенды (Книги)
         let currentPage = 1;
-        const totalPages = 12;
+        const totalPages = 15;
 
         function toggleLegendBook() {
             const wrapper = document.getElementById('book-wrapper');

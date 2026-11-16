@@ -933,6 +933,37 @@
             <button onclick="openPrintPicker()" style="width: 100%; margin-top: 20px; padding: 14px; background: transparent; border: 1px solid var(--gold); color: var(--gold); border-radius: 10px; cursor: pointer; font-weight: bold; font-family: var(--font-body); transition: 0.3s;" onmouseover="this.style.background='var(--gold)'; this.style.color='var(--bg)';" onmouseout="this.style.background='transparent'; this.style.color='var(--gold)';">💾 Скачать за период</button>
         </div>
         <div style="max-width: 600px; width: 100%;">
+            <!-- Секрет ведения дневника -->
+            <div style="margin-bottom: 25px;">
+                <button onclick="toggleDiaryBook()" style="width: 100%; padding: 15px 20px; background: rgba(0,0,0,0.6); border: 1px solid var(--gold); color: var(--gold); border-radius: 14px; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-title); transition: 0.3s;">
+                    <span>📖 Секрет ведения дневника</span>
+                    <span id="icon-diary-book" style="font-family: sans-serif; font-size: 0.9rem;">🔽</span>
+                </button>
+
+                <div id="diary-book-wrapper" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; margin-top: 10px;">
+                    <div style="background: rgba(255,255,255,0.02); padding: 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
+                       
+                        <!-- Страница 1 -->
+                        <div id="diary-page-1" class="diary-page" style="display: block; font-size: 0.95rem; line-height: 1.6; color: #ddd; text-align: justify;">
+                            <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 10px; text-align: center;">Проявление мыслей</h3>
+                            <p>Мысли редко приходят в строгом порядке. Чаще всего они просто крутятся в голове, путаются, и нам сложно уловить их суть. Но когда мы записываем их текстом, происходит волшебство: мы придаём им форму. Наши чувства и состояние перестают быть невидимыми, они становятся ощутимыми.</p>
+                        </div>
+
+                        <!-- Страница 2 -->
+                        <div id="diary-page-2" class="diary-page" style="display: none; font-size: 0.95rem; line-height: 1.6; color: #ddd; text-align: justify;">
+                            <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 10px; text-align: center;">Свобода выбора</h3>
+                            <p>Именно в этот момент с ними становится можно работать. Записанная мысль — это уже не туманный страх, а конкретный объект. Ты видишь, откуда он взялся, что он тебе даёт. Осознав это, ты получаешь свободу выбора: оставить как есть или начать менять. Дневник — твой инструмент для проявления.</p>
+                        </div>
+
+                        <!-- Навигация -->
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 15px; border-top: 1px dashed rgba(255, 217, 138, 0.2);">
+                            <button id="diary-prevBtn" onclick="changeDiaryPage(-1)" disabled style="background: rgba(255, 217, 138, 0.1); border: 1px solid var(--gold); color: var(--gold); padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; transition: 0.3s; font-family: var(--font-body);">← Назад</button>
+                            <span id="diary-pageIndicator" style="font-size: 0.8rem; color: var(--muted); font-style: italic;">Стр. 1 из 2</span>
+                            <button id="diary-nextBtn" onclick="changeDiaryPage(1)" style="background: rgba(255, 217, 138, 0.1); border: 1px solid var(--gold); color: var(--gold); padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; transition: 0.3s; font-family: var(--font-body);">Вперед →</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <textarea id="diary-text" class="diary-input" placeholder="Напиши, что ты осознал(а) сейчас..."></textarea>
             <button class="btn-save" onclick="saveDiaryNote()">Сохранить запись</button>
             <button onclick="toggleHistory()" style="width: 100%; padding: 15px; background: rgba(0,0,0,0.4); border: 1px solid var(--muted); color: var(--text); border-radius: var(--r-md); cursor: pointer; font-weight: 500; margin-bottom: 15px; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: 0.3s;">
@@ -1630,6 +1661,32 @@
                 text.style.maxHeight = '0px';
                 icon.innerText = '🔽';
             }
+        }
+        
+        // Логика для мини-книги Дневника
+        let currentDiaryPage = 1;
+        const totalDiaryPages = 2;
+
+        function toggleDiaryBook() {
+            const wrapper = document.getElementById('diary-book-wrapper');
+            const icon = document.getElementById('icon-diary-book');
+            if (wrapper.style.maxHeight === '0px' || wrapper.style.maxHeight === '') {
+                wrapper.style.maxHeight = '800px'; // Открываем
+                icon.innerText = '🔼';
+            } else {
+                wrapper.style.maxHeight = '0px'; // Закрываем
+                icon.innerText = '🔽';
+            }
+        }
+
+        function changeDiaryPage(direction) {
+            document.getElementById('diary-page-' + currentDiaryPage).style.display = 'none';
+            currentDiaryPage += direction;
+            document.getElementById('diary-page-' + currentDiaryPage).style.display = 'block';
+           
+            document.getElementById('diary-pageIndicator').innerText = `Стр. ${currentDiaryPage} из ${totalDiaryPages}`;
+            document.getElementById('diary-prevBtn').disabled = (currentDiaryPage === 1);
+            document.getElementById('diary-nextBtn').disabled = (currentDiaryPage === totalDiaryPages);
         }
         	
         window.onload = function() {

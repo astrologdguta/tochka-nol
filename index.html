@@ -862,6 +862,101 @@
             </div>
         </div>
     </section>
+
+        <!-- КНИГА ПРИТЧ -->
+    <section id="parables" style="padding: 60px 20px; display: flex; flex-direction: column; align-items: center; border-bottom: 1px dashed rgba(255,255,255,0.05);">
+        <div style="width: 100%; max-width: 600px; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 14px; border: 1px solid rgba(255, 217, 138, 0.3); box-sizing: border-box;">
+           
+            <button onclick="toggleParablesBook()" style="width: 100%; padding: 20px; background: rgba(0,0,0,0.6); border: 1px solid var(--gold); color: var(--gold); border-radius: 14px; font-size: 1.5rem; cursor: pointer; display: flex; justify-content: center; align-items: center; font-family: var(--font-title); transition: 0.3s; position: relative;">
+                <span>📖 Книга притч</span>
+                <span id="icon-parables" style="font-family: sans-serif; position: absolute; right: 20px;">🔽</span>
+            </button>
+
+            <div id="parables-wrapper" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; margin-top: 15px;">
+                <div style="background: rgba(255,255,255,0.02); padding: 30px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); min-height: 250px; display: flex; flex-direction: column; justify-content: space-between;">
+                   
+                    <!-- 1. Два ворона -->
+                    <div id="parable-page-1" class="parable-page" style="display: block; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Два ворона</h3>
+                        <p>Жил-был ворон, который очень гордился своим черным оперением. Однажды он встретил другого ворона и начал хвастаться: «Посмотри, какой я черный и блестящий!» Второй ворон молчал. Тогда первый ворон закричал: «Да что ты молчишь? Признай, что я лучше тебя!» Второй ворон посмотрел на него и сказал: «Пока ты смотришь только на меня, ты не видишь неба. А я смотрю на небо, и в моем сердце нет места для зависти».</p>
+                        <p style="color: var(--gold); font-style: italic; margin-top: 15px;">Мораль: Прошлое часто заставляет нас сравнивать себя с другими. Но пока мы смотрим на других, мы не видим своего собственного пути.</p>
+                    </div>
+
+                    <!-- 2. Два волка -->
+                    <div id="parable-page-2" class="parable-page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Два волка</h3>
+                        <p>Когда-то давно старый индеец открыл своему внуку одну жизненную истину: — В каждом человеке идет борьба, очень похожая на борьбу двух волков. Один волк представляет зло — зависть, ревность, страх, обиду. Другой волк представляет добро — мир, любовь, надежду, благодарность.</p>
+                        <p>Маленький индеец задумался и спросил: — А какой волк в конце побеждает? Старый индеец едва заметно улыбнулся и ответил: — Всегда побеждает тот волк, которого ты кормишь.</p>
+                        <p style="color: var(--gold); font-style: italic; margin-top: 15px;">Мораль: Ты сам выбираешь, на чем фокусироваться — на прошлом или на свете.</p>
+                    </div>
+
+                    <!-- 3. Два монаха -->
+                    <div id="parable-page-3" class="parable-page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Два монаха</h3>
+                        <p>Два монаха шли по дороге и увидели на берегу реки плачущую девушку. Она боялась перейти реку. Один из монахов молча взял ее на руки, перенес через реку, поставил на берег и пошел дальше. Второй монах шел рядом и молчал несколько часов. Наконец он не выдержал: — Мы же дали обет не прикасаться к женщинам! Как ты мог?! На что первый монах ответил: — Я перенес ее и оставил на берегу. А ты до сих пор несешь ее в своей голове.</p>
+                        <p style="color: var(--gold); font-style: italic; margin-top: 15px;">Мораль: Отпускай прошлое. Не носи то, что уже закончилось, в своей голове.</p>
+                    </div>
+
+                    <!-- 4. Чашка чая -->
+                    <div id="parable-page-4" class="parable-page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Чашка чая</h3>
+                        <p>Ученик пришел к мудрецу и спросил: — Учитель, как мне найти покой? Мой ум не останавливается ни на минуту. Мудрец взял чашку и начал наливать в нее воду. Вода переливалась через край, пока мусор и пыль со стола не начали подниматься со дна. — Видишь? — сказал мудрец. — Когда ум переполнен, в нем нет места для ясности. Остановись. Позволь пыли осесть на дно. И тогда вода снова станет чистой.</p>
+                        <p style="color: var(--gold); font-style: italic; margin-top: 15px;">Мораль: Точка Ноль — это момент, когда ум перестает быть переполненным.</p>
+                    </div>
+
+                    <!-- 5. Гвозди -->
+                    <div id="parable-page-5" class="parable-page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Гвозди</h3>
+                        <p>Один отец решил научить сына контролировать свой гнев. Каждый раз, когда мальчик злился или обижался, он должен был забить один гвоздь в забор. В первый же день он забил 37 гвоздей. Но постепенно он стал забивать все меньше. И вот настал день, когда он не забил ни одного гвоздя. Отец сказал: «Теперь вытаскивай по одному гвоздю за каждый день, когда ты был спокоен». Когда мальчик вытащил все гвозди, отец подвел его к забору и сказал: «Видишь, сколько в нем дыр? Забор никогда не будет прежним».</p>
+                        <p style="color: var(--gold); font-style: italic; margin-top: 15px;">Мораль: Обиды оставляют шрамы, но они делают нас мудрее.</p>
+                    </div>
+
+                    <!-- 6. Старый кувшин -->
+                    <div id="parable-page-6" class="parable-page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Старый кувшин</h3>
+                        <p>У одного человека был красивый глиняный кувшин, который дал трещину. Он очень расстраивался, что теперь не может носить в нем воду без потерь. Однажды он встретил мудреца и пожаловался ему. Мудрец сказал: «А ты посмотри на трещину. Вода, которая вытекает, поит цветы на твоем пути. Без этой трещины они бы погибли».</p>
+                        <p style="color: var(--gold); font-style: italic; margin-top: 15px;">Мораль: То, что кажется трещиной, может быть источником роста.</p>
+                    </div>
+
+                    <!-- 7. Две стрелы -->
+                    <div id="parable-page-7" class="parable-page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Две стрелы</h3>
+                        <p>Один мудрец сказал ученикам: «Представьте, что в вас летит стрела. Первая стрела — это сама боль, она уже попала в вас. Но вторая стрела — это ваша реакция на эту боль: страх, обида, паника. Эта вторая стрела ранит гораздо сильнее первой».</p>
+                        <p style="color: var(--gold); font-style: italic; margin-top: 15px;">Мораль: События неизбежны, но страдания — это наш выбор.</p>
+                    </div>
+
+                    <!-- 8. Два семени -->
+                    <div id="parable-page-8" class="parable-page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Два семени</h3>
+                        <p>Однажды два семени лежали в плодородной земле. Первое семя сказало: «Я хочу расти. Я хочу пустить корни глубоко в землю и пробиться сквозь неё, чтобы увидеть солнце». И оно выросло в прекрасное растение. Второе семя сказало: «Я боюсь. Если я пущу корни, я не знаю, что будет. Лучше я останусь в безопасности». И оно осталось лежать в земле. Вскоре пришла курица и склевала второе семя.</p>
+                        <p style="color: var(--gold); font-style: italic; margin-top: 15px;">Мораль: Только пройдя через страх, можно прорасти.</p>
+                    </div>
+
+                    <!-- 9. Мутная вода -->
+                    <div id="parable-page-9" class="parable-page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Мутная вода</h3>
+                        <p>Учитель взял стакан с мутной водой и спросил ученика: «Как сделать эту воду чистой?» Ученик начал трясти стакан, пытаясь перемешать воду, но она стала еще грязнее. Тогда учитель просто поставил стакан на стол и сказал: «Просто подожди. Грязь осядет на дно, и вода станет прозрачной».</p>
+                        <p style="color: var(--gold); font-style: italic; margin-top: 15px;">Мораль: Иногда лучше остановиться и сделать паузу, чтобы ответы пришли сами.</p>
+                    </div>
+
+                    <!-- 10. Карта и местность -->
+                    <div id="parable-page-10" class="parable-page" style="display: none; font-size: 1.05rem; line-height: 1.7; color: #ddd; text-align: justify;">
+                        <h3 style="color: var(--gold); font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px; text-align: center;">Карта и местность</h3>
+                        <p>Путник шел по дороге и встретил мудреца. «Скажи, — спросил путник, — как мне найти правильный путь?» Мудрец достал карту и показал ему дорогу. Путник обрадовался и пошел. Но через час вернулся разгневанный: «Твоя карта бесполезна! На дороге нет моста, который на ней нарисован!» Мудрец улыбнулся и ответил: «Карта — это не сама местность. Карта — это лишь руководство. Ты должен идти по ней, но смотреть на реальную дорогу».</p>
+                        <p style="color: var(--gold); font-style: italic; margin-top: 15px;">Мораль: Наш сайт — это карта. Но свою жизнь ты строишь сам, шаг за шагом.</p>
+                    </div>
+
+                    <!-- Навигация -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 25px; padding-top: 15px; border-top: 1px dashed rgba(255, 217, 138, 0.2);">
+                        <button id="parable-prevBtn" onclick="changeParablePage(-1)" disabled style="background: rgba(255, 217, 138, 0.1); border: 1px solid var(--gold); color: var(--gold); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: 0.3s; font-family: var(--font-body);">← Назад</button>
+                        <span id="parable-pageIndicator" style="font-size: 0.85rem; color: var(--muted); font-style: italic;">Притча 1 из 10</span>
+                        <button id="parable-nextBtn" onclick="changeParablePage(1)" style="background: rgba(255, 217, 138, 0.1); border: 1px solid var(--gold); color: var(--gold); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: 0.3s; font-family: var(--font-body);">Вперед →</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
 		
         <!-- КЛЮЧЕВЫЕ ПОНЯТИЯ -->
     <section id="concepts" style="padding: 60px 20px; display: flex; flex-direction: column; align-items: center; border-bottom: 1px dashed rgba(255,255,255,0.05);">
@@ -1687,6 +1782,22 @@
             document.getElementById('diary-pageIndicator').innerText = `Стр. ${currentDiaryPage} из ${totalDiaryPages}`;
             document.getElementById('diary-prevBtn').disabled = (currentDiaryPage === 1);
             document.getElementById('diary-nextBtn').disabled = (currentDiaryPage === totalDiaryPages);
+        }
+
+        // Логика для Книги Притч
+        let currentParable = 1;
+        const totalParables = 10;
+
+        function toggleParablesBook() {
+            const wrapper = document.getElementById('parables-wrapper');
+            const icon = document.getElementById('icon-parables');
+            if (wrapper.style.maxHeight === '0px' || wrapper.style.maxHeight === '') {
+                wrapper.style.maxHeight = '1500px';
+                icon.innerText = '🔼';
+            } else {
+                wrapper.style.maxHeight = '0px';
+                icon.innerText = '🔽';
+            }
         }
         	
         window.onload = function() {
